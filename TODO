@@ -1,9 +1,9 @@
 
 Todo:
-  ☐ Git repo
+  ✔ Git repo @done(20-06-17 21:58)
   ☐ npm initial publish
   ☐ setup netlify
-  ☐ Fix README.md
+  ✔ Fix README.md @done(20-06-17 22:28)
   ☐ Add README.md to Notes of storybook
   ☐ Build setup
   ☐ Advanced Examples
