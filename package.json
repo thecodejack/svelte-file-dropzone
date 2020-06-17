@@ -1,0 +1,49 @@
+{
+  "name": "svelte-file-dropzone",
+  "version": "0.0.1",
+  "description": "Svelte component for fileupload and file dropzone",
+  "svelte": "src/index.js",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "attr-accept": "^2.1.0",
+    "file-selector": "^0.1.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addon-notes": "^5.3.19",
+    "@storybook/addon-storysource": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/svelte": "^5.3.19",
+    "babel-loader": "^8.1.0",
+    "rollup": "^2.16.1",
+    "rollup-plugin-svelte": "^5.2.2",
+    "svelte": "^3.23.2",
+    "svelte-loader": "^2.13.6"
+  },
+  "keywords": [
+    "svelte",
+    "svelte3",
+    "material-ui",
+    "material-design",
+    "material",
+    "svelte-components",
+    "sveltejs"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ]
+}
