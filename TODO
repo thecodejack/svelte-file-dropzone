@@ -2,7 +2,7 @@
 Todo:
   ✔ Git repo @done(20-06-17 21:58)
   ☐ npm initial publish
-  ☐ setup netlify
+  ✔ setup netlify @done(20-06-17 22:55)
   ✔ Fix README.md @done(20-06-17 22:28)
   ☐ Add README.md to Notes of storybook
   ✔ Build setup @done(20-06-17 22:33)
