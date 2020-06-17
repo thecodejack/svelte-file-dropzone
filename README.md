@@ -2,6 +2,8 @@
 
 Svelte implementation of [react-dropzone](https://github.com/react-dropzone/react-dropzone).
 
+Storybook at https://svelte-file-dropzone.netlify.app/
+
 ## Installation
 
 ```
