@@ -12,7 +12,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "author": "",
+  "author": "thecodejack",
   "license": "MIT",
   "dependencies": {
     "attr-accept": "^2.1.0",
