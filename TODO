@@ -5,7 +5,7 @@ Todo:
   ☐ setup netlify
   ✔ Fix README.md @done(20-06-17 22:28)
   ☐ Add README.md to Notes of storybook
-  ☐ Build setup
+  ✔ Build setup @done(20-06-17 22:33)
   ☐ Advanced Examples
     ☐ Custom Dropzone with delete file etc
     ☐ CustomDropzone with different drop behaviour

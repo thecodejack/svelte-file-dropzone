@@ -6,8 +6,13 @@ import CustomSlotDropzoneView from "./views/CustomSlotDropzoneView.svelte";
 import NoClickDropZoneView from "./views/NoClickDropzoneView.svelte";
 import NoDragDropzoneView from "./views/NoDragDropzoneView.svelte";
 
+import intro from "./../README.md";
+
 export default {
   title: "Examples",
+  parameters: {
+    notes: { Introduction: intro },
+  },
 };
 
 export const BasicDropzone = () => ({
