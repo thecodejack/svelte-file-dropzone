@@ -18,7 +18,7 @@ yarn add svelte-file-dropzone
 
 ```
 <script>
-  import Dropzone from "./../../src";
+  import Dropzone from "svelte-file-dropzone";
 
   let files = {
     accepted: [],
