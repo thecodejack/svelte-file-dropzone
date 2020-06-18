@@ -71,6 +71,10 @@ yarn add svelte-file-dropzone
 | dropaccepted     |             | `{acceptedFiles,event}`                |
 | filedialogcancel |             |                                        |
 
+### Examples
+
+[Click here](https://github.com/thecodejack/svelte-file-dropzone/tree/master/stories/views) to view stories implementation
+
 ## Credits
 
 Component is reimplementation [react-dropzone](https://github.com/react-dropzone/react-dropzone). Thanks goes to author and contributors of [react-dropzone](https://github.com/react-dropzone/react-dropzone).

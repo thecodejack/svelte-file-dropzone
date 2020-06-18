@@ -1,12 +1,12 @@
 
 Todo:
   ✔ Git repo @done(20-06-17 21:58)
-  ☐ npm initial publish
+  ✔ npm initial publish @done(20-06-18 22:34)
   ✔ setup netlify @done(20-06-17 22:55)
   ✔ Fix README.md @done(20-06-17 22:28)
-  ☐ Add README.md to Notes of storybook
+  ✔ Add README.md to Notes of storybook @done(20-06-18 22:34)
   ✔ Build setup @done(20-06-17 22:33)
   ☐ Advanced Examples
     ☐ Custom Dropzone with delete file etc
-    ☐ CustomDropzone with different drop behaviour
+    ✔ CustomDropzone with different drop behaviour @done(20-06-18 22:34)
     
