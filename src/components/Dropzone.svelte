@@ -225,7 +225,7 @@
           });
         }
 
-        if (acceptedFiles.length > 0 && onDropAccepted) {
+        if (acceptedFiles.length > 0) {
           dispatch("dropaccepted", {
             acceptedFiles,
             event

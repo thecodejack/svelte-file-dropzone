@@ -1,6 +1,6 @@
 # svelte-file-dropzone
 
-Svelte implementation of [react-dropzone](https://github.com/react-dropzone/react-dropzone).
+SvelteJS component for file upload and dropzone.The component is Svelte implementation of [react-dropzone](https://github.com/react-dropzone/react-dropzone).
 
 [Click here for Storybook link](https://svelte-file-dropzone.netlify.app/?path=/info/examples--basic-dropzone)
 
