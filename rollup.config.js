@@ -14,5 +14,4 @@ export default {
     { file: pkg.main, format: "umd", name },
   ],
   plugins: [svelte(), resolve()],
-  external: ["attr-accept"],
 };

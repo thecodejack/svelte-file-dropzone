@@ -1,4 +1,4 @@
-import accepts from "attr-accept";
+import * as accepts from "attr-accept";
 
 // Error codes
 export const FILE_INVALID_TYPE = "file-invalid-type";
@@ -41,7 +41,7 @@ export const TOO_MANY_FILES_REJECTION = {
 // that MIME type will always be accepted
 export function fileAccepted(file, accept) {
   const isAcceptable =
-    file.type === "application/x-moz-file" || accepts(file, accept);
+    file.type === "application/x-moz-file" || accepts.default(file, accept);
   return [
     isAcceptable,
     isAcceptable ? null : getInvalidTypeRejectionErr(accept),
