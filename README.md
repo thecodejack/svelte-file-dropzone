@@ -82,7 +82,7 @@ yarn add svelte-file-dropzone
 
 ## Credits
 
-Component is reimplementation [react-dropzone](https://github.com/react-dropzone/react-dropzone). Thanks goes to author and contributors of [react-dropzone](https://github.com/react-dropzone/react-dropzone).
+Component is reimplementation [react-dropzone](https://github.com/react-dropzone/react-dropzone). Complete credit goes to author and contributors of [react-dropzone](https://github.com/react-dropzone/react-dropzone).
 
 ## License
 
