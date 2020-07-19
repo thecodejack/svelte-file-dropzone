@@ -37,10 +37,11 @@
   "keywords": [
     "svelte",
     "svelte3",
-    "material-ui",
-    "material-design",
-    "material",
     "svelte-components",
+    "upload",
+    "dropzone",
+    "svelte-file-dropzone",
+    "svelte-dropzone",
     "sveltejs"
   ],
   "files": [
