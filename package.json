@@ -12,6 +12,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
+  "repository": {
+    "url": "https://github.com/thecodejack/svelte-file-dropzone"
+  },
   "author": "thecodejack",
   "license": "MIT",
   "dependencies": {
