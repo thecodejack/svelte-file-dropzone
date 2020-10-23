@@ -18,8 +18,8 @@
   "author": "thecodejack",
   "license": "MIT",
   "dependencies": {
-    "attr-accept": "^2.1.0",
-    "file-selector": "^0.1.12"
+    "attr-accept": "^2.2.2",
+    "file-selector": "^0.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
