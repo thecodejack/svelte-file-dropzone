@@ -1,6 +1,6 @@
 {
   "name": "svelte-file-dropzone",
-  "version": "0.0.11",
+  "version": "0.0.12-beta.0",
   "description": "Svelte component for fileupload and file dropzone",
   "svelte": "src/index.js",
   "module": "dist/index.mjs",
