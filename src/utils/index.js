@@ -1,4 +1,4 @@
-import accepts from "attr-accept";
+import accepts from "./attr-accept";
 
 // Error codes
 export const FILE_INVALID_TYPE = "file-invalid-type";

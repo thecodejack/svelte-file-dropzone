@@ -18,7 +18,6 @@
   "author": "thecodejack",
   "license": "MIT",
   "dependencies": {
-    "attr-accept": "^2.2.2",
     "file-selector": "^0.2.2"
   },
   "devDependencies": {
