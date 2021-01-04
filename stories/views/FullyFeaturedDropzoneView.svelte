@@ -29,7 +29,7 @@
 <Dropzone
   on:drop={handleFilesSelect}
   accept={['image/*']}
-  containerClass="custom-dropzone">
+  containerClasses="custom-dropzone">
   <button>Choose images to upload</button>
 
   <p>or</p>
