@@ -32,7 +32,7 @@
     "@storybook/svelte": "6.2.8",
     "babel-loader": "8.2.2",
     "rollup": "2.42.0",
-    "rollup-plugin-svelte": "7.0.0",
+    "rollup-plugin-svelte": "7.1.0",
     "svelte": "3.37.0",
     "svelte-loader": "3.0.0"
   },
