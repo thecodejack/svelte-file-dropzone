@@ -12,11 +12,11 @@ SvelteJS component for file upload and dropzone.The component is Svelte implemen
 ## Installation
 
 ```
-npm install svelte-file-dropzone
+npm install -D svelte-file-dropzone
 
 or
 
-yarn add svelte-file-dropzone
+yarn add -D svelte-file-dropzone
 ```
 
 ## Usage
