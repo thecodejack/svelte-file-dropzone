@@ -18,23 +18,23 @@
   "author": "thecodejack",
   "license": "MIT",
   "dependencies": {
-    "file-selector": "^0.2.2"
+    "file-selector": "^0.2.4"
   },
   "devDependencies": {
-    "@babel/core": "7.14.6",
-    "@rollup/plugin-commonjs": "18.0.0",
-    "@rollup/plugin-node-resolve": "11.2.1",
-    "@storybook/addon-actions": "6.2.9",
-    "@storybook/addon-links": "6.2.9",
+    "@babel/core": "7.16.0",
+    "@rollup/plugin-commonjs": "21.0.1",
+    "@rollup/plugin-node-resolve": "13.0.6",
+    "@storybook/addon-actions": "6.4.5",
+    "@storybook/addon-links": "6.4.5",
     "@storybook/addon-notes": "5.3.21",
-    "@storybook/addon-storysource": "6.2.9",
-    "@storybook/addons": "6.2.9",
-    "@storybook/svelte": "6.2.9",
-    "babel-loader": "8.2.2",
-    "rollup": "2.46.0",
+    "@storybook/addon-storysource": "6.4.5",
+    "@storybook/addons": "6.4.5",
+    "@storybook/svelte": "6.4.5",
+    "babel-loader": "8.2.3",
+    "rollup": "2.60.2",
     "rollup-plugin-svelte": "7.1.0",
-    "svelte": "3.41.0",
-    "svelte-loader": "3.1.1"
+    "svelte": "3.44.2",
+    "svelte-loader": "3.1.2"
   },
   "keywords": [
     "svelte",

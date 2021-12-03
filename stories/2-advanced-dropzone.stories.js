@@ -1,23 +1,21 @@
-import { action } from "@storybook/addon-actions";
+import WorkingCSVFileUploadView from './views/WorkingCSVFileUploadView.svelte'
+import FullyFeaturedDropzoneView from './views/FullyFeaturedDropzoneView.svelte'
 
-import WorkingCSVFileUploadView from "./views/WorkingCSVFileUploadView.svelte";
-import FullyFeaturedDropzoneView from "./views/FullyFeaturedDropzoneView.svelte";
-
-import intro from "./../README.md";
+import intro from './../README.md'
 
 export default {
-  title: "Advanced Examples",
+  title: 'Advanced Examples',
   parameters: {
-    notes: { Introduction: intro },
-  },
-};
+    notes: { Introduction: intro }
+  }
+}
 
 export const WorkingCSVFileUploadDropzone = () => ({
   Component: WorkingCSVFileUploadView,
-  props: {},
-});
+  props: {}
+})
 
 export const FullyFeaturedImagesDropzone = () => ({
   Component: FullyFeaturedDropzoneView,
-  props: {},
-});
+  props: {}
+})

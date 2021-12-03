@@ -9,25 +9,25 @@
  * @returns {boolean}
  */
 
-export default function(file, acceptedFiles) {
+export default function (file, acceptedFiles) {
   if (file && acceptedFiles) {
     const acceptedFilesArray = Array.isArray(acceptedFiles)
       ? acceptedFiles
-      : acceptedFiles.split(",");
-    const fileName = file.name || "";
-    const mimeType = (file.type || "").toLowerCase();
-    const baseMimeType = mimeType.replace(/\/.*$/, "");
+      : acceptedFiles.split(',')
+    const fileName = file.name || ''
+    const mimeType = (file.type || '').toLowerCase()
+    const baseMimeType = mimeType.replace(/\/.*$/, '')
 
     return acceptedFilesArray.some((type) => {
-      const validType = type.trim().toLowerCase();
-      if (validType.charAt(0) === ".") {
-        return fileName.toLowerCase().endsWith(validType);
-      } else if (validType.endsWith("/*")) {
+      const validType = type.trim().toLowerCase()
+      if (validType.charAt(0) === '.') {
+        return fileName.toLowerCase().endsWith(validType)
+      } else if (validType.endsWith('/*')) {
         // This is something like a image/* mime type
-        return baseMimeType === validType.replace(/\/.*$/, "");
+        return baseMimeType === validType.replace(/\/.*$/, '')
       }
-      return mimeType === validType;
-    });
+      return mimeType === validType
+    })
   }
-  return true;
+  return true
 }
