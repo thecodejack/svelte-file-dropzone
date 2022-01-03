@@ -80,6 +80,13 @@ yarn add svelte-file-dropzone
 
 [Click here](https://github.com/thecodejack/svelte-file-dropzone/tree/master/stories/views) to view stories implementation
 
+## Changelog
+
+### v1
+
+- [Breaking] component folder restructured to fix SSR build issues
+- [Fix] https://github.com/thecodejack/svelte-file-dropzone/issues/81
+
 ## Credits
 
 Component is reimplementation [react-dropzone](https://github.com/react-dropzone/react-dropzone). Complete credit goes to author and contributors of [react-dropzone](https://github.com/react-dropzone/react-dropzone).
