@@ -1,4 +1,5 @@
 <script>
+  import { browser } from "$app/env";
   import { fromEvent } from "file-selector";
   import {
     allFilesAccepted,
@@ -282,18 +283,22 @@
   }
 
   onMount(() => {
-    window.addEventListener("focus", onWindowFocus, false);
-    if (preventDropOnDocument) {
-      document.addEventListener("dragover", onDocumentDragOver, false);
-      document.addEventListener("drop", onDocumentDrop, false);
+    if (browser) {
+      window.addEventListener("focus", onWindowFocus, false);
+      if (preventDropOnDocument) {
+        document.addEventListener("dragover", onDocumentDragOver, false);
+        document.addEventListener("drop", onDocumentDrop, false);
+      }
     }
   });
 
   onDestroy(() => {
-    window && window.removeEventListener("focus", onWindowFocus, false);
-    if (preventDropOnDocument) {
-      document && document.removeEventListener("dragover", onDocumentDragOver);
-      document && document.removeEventListener("drop", onDocumentDrop);
+    if (browser) {
+      window.removeEventListener("focus", onWindowFocus, false);
+      if (preventDropOnDocument) {
+        document.removeEventListener("dragover", onDocumentDragOver);
+        document.removeEventListener("drop", onDocumentDrop);
+      }
     }
   });
 
