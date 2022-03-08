@@ -182,6 +182,9 @@
     dragTargetsRef = [];
 
     if (isEvtWithFiles(event)) {
+      dispatch("startprocess", {
+        event
+      })
       Promise.resolve(getFilesFromEvent(event)).then(files => {
         if (isPropagationStopped(event) && !noDragEventsBubbling) {
           return;
