@@ -21,7 +21,7 @@ yarn add svelte-file-dropzone
 
 ## Usage
 
-```
+```svelte
 <script>
   import Dropzone from "svelte-file-dropzone";
 
