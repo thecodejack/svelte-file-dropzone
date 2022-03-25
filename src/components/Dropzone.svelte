@@ -182,7 +182,7 @@
     dragTargetsRef = [];
 
     if (isEvtWithFiles(event)) {
-      dispatch("startprocess", {
+      dispatch("filedropped", {
         event
       })
       Promise.resolve(getFilesFromEvent(event)).then(files => {
