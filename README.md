@@ -72,6 +72,7 @@ yarn add svelte-file-dropzone
 | dragover         |             | `{dragEvent: event}`                   |
 | dragleave        |             | `{dragEvent: event}`                   |
 | drop             |             | `{acceptedFiles,fileRejections,event}` |
+| filedropped      |             | `{event}`                              |
 | droprejected     |             | `{fileRejections,event}`               |
 | dropaccepted     |             | `{acceptedFiles,event}`                |
 | filedialogcancel |             |                                        |
