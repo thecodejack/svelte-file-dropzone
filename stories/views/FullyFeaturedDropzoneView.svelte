@@ -22,7 +22,7 @@
 </script>
 
 <style>
-  :global(custom-dropzone) {
+  :global(.custom-dropzone) {
   }
 </style>
 
