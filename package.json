@@ -1,53 +1,55 @@
 {
-  "name": "svelte-file-dropzone",
-  "version": "0.0.15",
-  "description": "Svelte component for fileupload and file dropzone",
-  "svelte": "src/components/Dropzone.svelte",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "rollup -c",
-    "prepublishOnly": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "repository": {
-    "url": "https://github.com/thecodejack/svelte-file-dropzone"
-  },
-  "author": "thecodejack",
-  "license": "MIT",
-  "dependencies": {
-    "file-selector": "^0.2.2"
-  },
-  "devDependencies": {
-    "@babel/core": "7.14.6",
-    "@rollup/plugin-commonjs": "18.0.0",
-    "@rollup/plugin-node-resolve": "11.2.1",
-    "@storybook/addon-actions": "6.2.9",
-    "@storybook/addon-links": "6.2.9",
-    "@storybook/addon-notes": "5.3.21",
-    "@storybook/addon-storysource": "6.2.9",
-    "@storybook/addons": "6.2.9",
-    "@storybook/svelte": "6.2.9",
-    "babel-loader": "8.2.2",
-    "rollup": "2.46.0",
-    "rollup-plugin-svelte": "7.1.0",
-    "svelte": "3.41.0",
-    "svelte-loader": "3.1.1"
-  },
-  "keywords": [
-    "svelte",
-    "svelte3",
-    "svelte-components",
-    "upload",
-    "dropzone",
-    "svelte-file-dropzone",
-    "svelte-dropzone",
-    "sveltejs"
-  ],
-  "files": [
-    "src",
-    "dist"
-  ]
+    "name": "svelte-file-dropzone",
+    "version": "0.0.15",
+    "description": "Svelte component for fileupload and file dropzone",
+    "svelte": "src/components/Dropzone.svelte",
+    "module": "dist/index.mjs",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "rollup -c && node scripts/genTypes.js",
+        "prepublishOnly": "npm run build",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "storybook": "start-storybook -p 6006",
+        "build-storybook": "build-storybook"
+    },
+    "repository": {
+        "url": "https://github.com/thecodejack/svelte-file-dropzone"
+    },
+    "author": "thecodejack",
+    "license": "MIT",
+    "dependencies": {
+        "file-selector": "^0.2.2"
+    },
+    "devDependencies": {
+        "@babel/core": "7.14.6",
+        "@rollup/plugin-commonjs": "18.0.0",
+        "@rollup/plugin-node-resolve": "11.2.1",
+        "@storybook/addon-actions": "6.2.9",
+        "@storybook/addon-links": "6.2.9",
+        "@storybook/addon-notes": "5.3.21",
+        "@storybook/addon-storysource": "6.2.9",
+        "@storybook/addons": "6.2.9",
+        "@storybook/svelte": "6.2.9",
+        "babel-loader": "8.2.2",
+        "rollup": "2.46.0",
+        "rollup-plugin-css-only": "^3.1.0",
+        "rollup-plugin-svelte": "7.1.0",
+        "sveld": "^0.15.0",
+        "svelte": "3.41.0",
+        "svelte-loader": "3.1.1"
+    },
+    "keywords": [
+        "svelte",
+        "svelte3",
+        "svelte-components",
+        "upload",
+        "dropzone",
+        "svelte-file-dropzone",
+        "svelte-dropzone",
+        "sveltejs"
+    ],
+    "files": [
+        "src",
+        "dist"
+    ]
 }
