@@ -32,7 +32,7 @@
   export let containerClasses = "";
   export let containerStyles = "";
   export let disableDefaultStyles = false;
-
+  export let name = "";
   const dispatch = createEventDispatcher();
 
   //state
@@ -344,6 +344,7 @@
     {accept}
     {multiple}
     type="file"
+    name={name}
     autocomplete="off"
     tabindex="-1"
     on:change={onDropCb}
