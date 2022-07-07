@@ -31,6 +31,7 @@
   export let noDragEventsBubbling = false;
   export let containerClasses = "";
   export let containerStyles = "";
+  export let containerText = "Drag 'n' drop some files here, or click to select files";
   export let disableDefaultStyles = false;
   export let name = "";
   const dispatch = createEventDispatcher();
@@ -352,6 +353,6 @@
     bind:this={inputRef}
     style="display: none;" />
   <slot>
-    <p>Drag 'n' drop some files here, or click to select files</p>
+    <p>{containerText}</p>
   </slot>
 </div>

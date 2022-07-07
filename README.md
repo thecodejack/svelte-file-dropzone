@@ -49,20 +49,21 @@ yarn add svelte-file-dropzone
 
 ### Props
 
-| Prop Name             | Description                                                                              | Default Value |
-| --------------------- | ---------------------------------------------------------------------------------------- | ------------- |
-| accept                | Set accepted file types. See https://github.com/okonet/attr-accept for more information. | undefined     |
-| disabled              |                                                                                          | false         |
-| maxSize               |                                                                                          | Infinity      |
-| minSize               |                                                                                          | 0             |
-| multiple              | if true, multiple files can be selected at once                                          | true          |
-| preventDropOnDocument | 1231                                                                                     | true          |
-| noClick               | disable click events                                                                     | false         |
-| noKeyboard            | disable keyboard events                                                                  | false         |
-| noDrag                | disable drag events                                                                      | false         |
-| containerClasses      | custom container classes                                                                 | ""            |
-| containerStyles       | custom inline container styles                                                           | ""            |
-| disableDefaultStyles  | don't apply default styles to container                                                  | false         |
+| Prop Name             | Description                                                                              | Default Value                                             |
+| --------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| accept                | Set accepted file types. See https://github.com/okonet/attr-accept for more information. | undefined                                                 |
+| disabled              |                                                                                          | false                                                     |
+| maxSize               |                                                                                          | Infinity                                                  |
+| minSize               |                                                                                          | 0                                                         |
+| multiple              | if true, multiple files can be selected at once                                          | true                                                      |
+| preventDropOnDocument | 1231                                                                                     | true                                                      |
+| noClick               | disable click events                                                                     | false                                                     |
+| noKeyboard            | disable keyboard events                                                                  | false                                                     |
+| noDrag                | disable drag events                                                                      | false                                                     |
+| containerClasses      | custom container classes                                                                 | ""                                                        |
+| containerStyles       | custom inline container styles                                                           | ""                                                        |
+| containerText         | customize the default text in the container                                              | "Drag 'n' drop some files here, or click to select files" |
+| disableDefaultStyles  | don't apply default styles to container                                                  | false                                                     |
 
 ### Events
 
