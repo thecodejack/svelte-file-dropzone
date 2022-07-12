@@ -37,7 +37,6 @@
   export let required = false;
   const dispatch = createEventDispatcher();
 
-  console.log("yeeehaaaa here is the local UPDATED version!");
   //state
 
   let state = {
