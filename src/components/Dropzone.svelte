@@ -8,7 +8,8 @@
     isEvtWithFiles,
     isIeOrEdge,
     isPropagationStopped,
-    TOO_MANY_FILES_REJECTION
+    onDocumentDragOver,
+    TOO_MANY_FILES_REJECTION,
   } from "./../utils/index";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
 
@@ -46,7 +47,7 @@
     isDragReject: false,
     draggedFiles: [],
     acceptedFiles: [],
-    fileRejections: []
+    fileRejections: [],
   };
 
   let rootRef;
@@ -345,19 +346,21 @@
   on:dragenter={composeDragHandler(onDragEnterCb)}
   on:dragover={composeDragHandler(onDragOverCb)}
   on:dragleave={composeDragHandler(onDragLeaveCb)}
-  on:drop={composeDragHandler(onDropCb)}>
+  on:drop={composeDragHandler(onDropCb)}
+>
   <input
     {accept}
     {multiple}
     {required}
     type="file"
-    name={name}
+    {name}
     autocomplete="off"
     tabindex="-1"
     on:change={onDropCb}
     on:click={onInputElementClick}
     bind:this={inputRef}
-    style="display: none;" />
+    style="display: none;"
+  />
   <slot>
     <p>Drag 'n' drop some files here, or click to select files</p>
   </slot>
