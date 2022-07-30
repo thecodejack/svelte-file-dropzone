@@ -8,8 +8,7 @@
     isEvtWithFiles,
     isIeOrEdge,
     isPropagationStopped,
-    onDocumentDragOver,
-    TOO_MANY_FILES_REJECTION,
+    TOO_MANY_FILES_REJECTION
   } from "./../utils/index";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
 
@@ -47,7 +46,7 @@
     isDragReject: false,
     draggedFiles: [],
     acceptedFiles: [],
-    fileRejections: [],
+    fileRejections: []
   };
 
   let rootRef;
@@ -113,7 +112,7 @@
     dragTargetsRef = [...dragTargetsRef, event.target];
 
     if (isEvtWithFiles(event)) {
-      Promise.resolve(getFilesFromEvent(event)).then((draggedFiles) => {
+      Promise.resolve(getFilesFromEvent(event)).then(draggedFiles => {
         if (isPropagationStopped(event) && !noDragEventsBubbling) {
           return;
         }
@@ -122,7 +121,7 @@
         state.isDragActive = true;
 
         dispatch("dragenter", {
-          dragEvent: event,
+          dragEvent: event
         });
       });
     }
@@ -140,7 +139,7 @@
 
     if (isEvtWithFiles(event)) {
       dispatch("dragover", {
-        dragEvent: event,
+        dragEvent: event
       });
     }
 
@@ -153,7 +152,7 @@
 
     // Only deactivate once the dropzone and all children have been left
     const targets = dragTargetsRef.filter(
-      (target) => rootRef && rootRef.contains(target)
+      target => rootRef && rootRef.contains(target)
     );
     // Make sure to remove a target present multiple times only once
     // (Firefox may fire dragenter/dragleave multiple times on the same element)
@@ -171,7 +170,7 @@
 
     if (isEvtWithFiles(event)) {
       dispatch("dragleave", {
-        dragEvent: event,
+        dragEvent: event
       });
     }
   }
@@ -184,9 +183,9 @@
 
     if (isEvtWithFiles(event)) {
       dispatch("filedropped", {
-        event,
-      });
-      Promise.resolve(getFilesFromEvent(event)).then((files) => {
+        event
+      })
+      Promise.resolve(getFilesFromEvent(event)).then(files => {
         if (isPropagationStopped(event) && !noDragEventsBubbling) {
           return;
         }
@@ -194,20 +193,20 @@
         const acceptedFiles = [];
         const fileRejections = [];
 
-        files.forEach((file) => {
+        files.forEach(file => {
           const [accepted, acceptError] = fileAccepted(file, accept);
           const [sizeMatch, sizeError] = fileMatchSize(file, minSize, maxSize);
           if (accepted && sizeMatch) {
             acceptedFiles.push(file);
           } else {
-            const errors = [acceptError, sizeError].filter((e) => e);
+            const errors = [acceptError, sizeError].filter(e => e);
             fileRejections.push({ file, errors });
           }
         });
 
         if (!multiple && acceptedFiles.length > 1) {
           // Reject everything and empty accepted files
-          acceptedFiles.forEach((file) => {
+          acceptedFiles.forEach(file => {
             fileRejections.push({ file, errors: [TOO_MANY_FILES_REJECTION] });
           });
           acceptedFiles.splice(0);
@@ -224,20 +223,20 @@
         dispatch("drop", {
           acceptedFiles,
           fileRejections,
-          event,
+          event
         });
 
         if (fileRejections.length > 0) {
           dispatch("droprejected", {
             fileRejections,
-            event,
+            event
           });
         }
 
         if (acceptedFiles.length > 0) {
           dispatch("dropaccepted", {
             acceptedFiles,
-            event,
+            event
           });
         }
       });
@@ -263,8 +262,18 @@
     }
   }
 
+  // allow the entire document to be a drag target
+  function onDocumentDragOver(event) {
+    if (preventDropOnDocument) {
+      event.preventDefault();
+    }
+  }
+
   let dragTargetsRef = [];
   function onDocumentDrop(event) {
+    if (!preventDropOnDocument) {
+      return;
+    }
     if (rootRef && rootRef.contains(event.target)) {
       // If we intercepted an event for our instance, let it propagate down to the instance's onDrop handler
       return;
@@ -290,61 +299,15 @@
     }
   }
 
-  onMount(() => {
-    window.addEventListener("focus", onWindowFocus, false);
-    if (preventDropOnDocument) {
-      document.addEventListener("dragover", onDocumentDragOver, false);
-      document.addEventListener("drop", onDocumentDrop, false);
-    }
-  });
-
   onDestroy(() => {
-    window.removeEventListener("focus", onWindowFocus, false);
-    if (preventDropOnDocument) {
-      document.removeEventListener("dragover", onDocumentDragOver);
-      document.removeEventListener("drop", onDocumentDrop);
-    }
+    // This is critical for canceling the timeout behaviour on `onWindowFocus()`
+    inputRef = null;
   });
 
   function onInputElementClick(event) {
     event.stopPropagation();
   }
 </script>
-
-<div
-  bind:this={rootRef}
-  tabindex="0"
-  class="{disableDefaultStyles ? '' : 'dropzone'}
-  {containerClasses}"
-  style={containerStyles}
-  on:keydown={composeKeyboardHandler(onKeyDownCb)}
-  on:focus={composeKeyboardHandler(onFocusCb)}
-  on:blur={composeKeyboardHandler(onBlurCb)}
-  on:click={composeHandler(onClickCb)}
-  on:dragenter={composeDragHandler(onDragEnterCb)}
-  on:dragover={composeDragHandler(onDragOverCb)}
-  on:dragleave={composeDragHandler(onDragLeaveCb)}
-  on:drop={composeDragHandler(onDropCb)}
->
-  <input
-    {accept}
-    {multiple}
-    {required}
-    type="file"
-    {name}
-    autocomplete="off"
-    tabindex="-1"
-    on:blur
-    on:change={onDropCb}
-    on:click={onInputElementClick}
-    on:invalid
-    bind:this={inputRef}
-    style="display: none;"
-  />
-  <slot>
-    <p>Drag 'n' drop some files here, or click to select files</p>
-  </slot>
-</div>
 
 <style>
   .dropzone {
@@ -366,3 +329,36 @@
     border-color: #2196f3;
   }
 </style>
+
+<svelte:window on:focus={onWindowFocus} on:dragover={onDocumentDragOver} on:drop={onDocumentDrop} />
+
+<div
+  bind:this={rootRef}
+  tabindex="0"
+  class="{disableDefaultStyles ? '' : 'dropzone'}
+  {containerClasses}"
+  style={containerStyles}
+  on:keydown={composeKeyboardHandler(onKeyDownCb)}
+  on:focus={composeKeyboardHandler(onFocusCb)}
+  on:blur={composeKeyboardHandler(onBlurCb)}
+  on:click={composeHandler(onClickCb)}
+  on:dragenter={composeDragHandler(onDragEnterCb)}
+  on:dragover={composeDragHandler(onDragOverCb)}
+  on:dragleave={composeDragHandler(onDragLeaveCb)}
+  on:drop={composeDragHandler(onDropCb)}>
+  <input
+    {accept}
+    {multiple}
+    {required}
+    type="file"
+    name={name}
+    autocomplete="off"
+    tabindex="-1"
+    on:change={onDropCb}
+    on:click={onInputElementClick}
+    bind:this={inputRef}
+    style="display: none;" />
+  <slot>
+    <p>Drag 'n' drop some files here, or click to select files</p>
+  </slot>
+</div>
