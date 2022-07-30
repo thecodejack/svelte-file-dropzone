@@ -8,7 +8,6 @@
     isEvtWithFiles,
     isIeOrEdge,
     isPropagationStopped,
-    onDocumentDragOver,
     TOO_MANY_FILES_REJECTION
   } from "./../utils/index";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
@@ -257,8 +256,18 @@
     }
   }
 
+  // allow the entire document to be a drag target
+  function onDocumentDragOver(event) {
+    if (preventDropOnDocument) {
+      event.preventDefault();
+    }
+  }
+
   let dragTargetsRef = [];
   function onDocumentDrop(event) {
+    if (!preventDropOnDocument) {
+      return;
+    }
     if (rootRef && rootRef.contains(event.target)) {
       // If we intercepted an event for our instance, let it propagate down to the instance's onDrop handler
       return;
@@ -284,20 +293,9 @@
     }
   }
 
-  onMount(() => {
-    window.addEventListener("focus", onWindowFocus, false);
-    if (preventDropOnDocument) {
-      document.addEventListener("dragover", onDocumentDragOver, false);
-      document.addEventListener("drop", onDocumentDrop, false);
-    }
-  });
-
   onDestroy(() => {
-    window.removeEventListener("focus", onWindowFocus, false);
-    if (preventDropOnDocument) {
-      document.removeEventListener("dragover", onDocumentDragOver);
-      document.removeEventListener("drop", onDocumentDrop);
-    }
+    // This is critical for canceling the timeout behaviour on `onWindowFocus()`
+    inputRef = null;
   });
 
   function onInputElementClick(event) {
@@ -325,6 +323,8 @@
     border-color: #2196f3;
   }
 </style>
+
+<svelte:window on:focus={onWindowFocus} on:dragover={onDocumentDragOver} on:drop={onDocumentDrop} />
 
 <div
   bind:this={rootRef}

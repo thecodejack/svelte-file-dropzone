@@ -111,11 +111,6 @@ export function isKindFile(item) {
   return typeof item === "object" && item !== null && item.kind === "file";
 }
 
-// allow the entire document to be a drag target
-export function onDocumentDragOver(event) {
-  event.preventDefault();
-}
-
 function isIe(userAgent) {
   return (
     userAgent.indexOf("MSIE") !== -1 || userAgent.indexOf("Trident/") !== -1
