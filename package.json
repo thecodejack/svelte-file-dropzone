@@ -10,7 +10,9 @@
     "sync": "svelte-kit sync",
     "package": "svelte-kit package",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check": "npm run check-svelte && npm run check-ts",
+    "check-svelte": "svelte-check --tsconfig ./tsconfig.json",
+    "check-ts": "tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "sirv": "sirv storybook-static"
