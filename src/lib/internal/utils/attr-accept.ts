@@ -8,7 +8,7 @@
  * @param acceptedFiles
  * @returns {boolean}
  */
-export default function(file: File, acceptedFiles: string): boolean {
+export default function(file: File, acceptedFiles: string | string[]): boolean {
   if (file && acceptedFiles) {
     const acceptedFilesArray = Array.isArray(acceptedFiles)
       ? acceptedFiles

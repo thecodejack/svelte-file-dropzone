@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { fromEvent } from "file-selector";
+  import { fromEvent, type FileWithPath } from "file-selector";
   import {
     fileAccepted,
     fileMatchSize,
     isEvtWithFiles,
     isIeOrEdge,
     isPropagationStopped,
-    TOO_MANY_FILES_REJECTION
+    TOO_MANY_FILES_REJECTION,
+    type GenericFileItem,
+    type ErrorDescription
   } from "../utils/index";
   import { onDestroy, createEventDispatcher } from "svelte";
 
@@ -17,7 +19,7 @@
    */
   export let accept: string | string[];
   export let disabled = false;
-  export let getFilesFromEvent = fromEvent;
+  export let getFilesFromEvent = fromEvent as (evt: Event) => Promise<(GenericFileItem)[]>;
   export let maxSize = Infinity;
   export let minSize = 0;
   export let multiple = true;
@@ -30,7 +32,34 @@
   export let containerStyles = "";
   export let disableDefaultStyles = false;
   export let name = "";
-  const dispatch = createEventDispatcher();
+
+  export type { GenericFileItem };
+
+  interface GenericEventDetails {
+    event: Event;
+  }
+
+  interface DragEventDetails {
+    dragEvent: DragEvent
+  };
+
+  const dispatch = createEventDispatcher<{
+    dragenter: DragEventDetails;
+    dragover: DragEventDetails;
+    dragleave: DragEventDetails;
+    filedropped: GenericEventDetails;
+    drop: {
+      acceptedFiles: File[];
+      fileRejections: { file: File, errors: ErrorDescription[] }[];
+    } & GenericEventDetails;
+    droprejected: {
+      fileRejections: { file: File, errors: ErrorDescription[] }[];
+    } & GenericEventDetails;
+    dropaccepted: {
+      acceptedFiles: File[];
+    } & GenericEventDetails;
+    filedialogcancel: undefined;
+  }>();
 
   //state
 
@@ -40,13 +69,13 @@
     isDragActive: false,
     isDragAccept: false,
     isDragReject: false,
-    draggedFiles: [],
-    acceptedFiles: [],
-    fileRejections: []
+    draggedFiles: [] as (FileWithPath | DataTransferItem)[],
+    acceptedFiles: [] as File[],
+    fileRejections: [] as { file: File, errors: ErrorDescription[] }[]
   };
 
-  let rootRef;
-  let inputRef;
+  let rootRef: HTMLDivElement;
+  let inputRef: HTMLInputElement | null;
 
   function resetState() {
     state.isFileDialogActive = false;
@@ -59,19 +88,21 @@
   // Fn for opening the file dialog programmatically
   function openFileDialog() {
     if (inputRef) {
-      inputRef.value = null; // TODO check if null needs to be set
+      inputRef.value = ""; // TODO check if empty needs to be set
       state.isFileDialogActive = true;
       inputRef.click();
     }
   }
 
   // Cb to open the file dialog when SPACE/ENTER occurs on the dropzone
-  function onKeyDownCb(event) {
+  function onKeyDownCb(event: KeyboardEvent) {
     // Ignore keyboard events bubbling up the DOM tree
-    if (!rootRef || !rootRef.isEqualNode(event.target)) {
+    // TODO should we just check `rootRef === event.target`?
+    if (!rootRef || !(event.target instanceof Node) || !rootRef.isEqualNode(event.target)) {
       return;
     }
 
+    // @ts-ignore: can't fix this deprecation, we need this version for legacy support
     if (event.keyCode === 32 || event.keyCode === 13) {
       event.preventDefault();
       openFileDialog();
@@ -102,11 +133,13 @@
     }
   }
 
-  function onDragEnterCb(event) {
+  function onDragEnterCb(event: DragEvent) {
     event.preventDefault();
     stopPropagation(event);
 
-    dragTargetsRef = [...dragTargetsRef, event.target];
+    if (event.target != null) {
+      dragTargetsRef = [...dragTargetsRef, event.target];
+    }
 
     if (isEvtWithFiles(event)) {
       Promise.resolve(getFilesFromEvent(event)).then(draggedFiles => {
@@ -124,7 +157,7 @@
     }
   }
 
-  function onDragOverCb(event) {
+  function onDragOverCb(event: DragEvent) {
     event.preventDefault();
     stopPropagation(event);
 
@@ -143,17 +176,17 @@
     return false;
   }
 
-  function onDragLeaveCb(event) {
+  function onDragLeaveCb(event: DragEvent) {
     event.preventDefault();
     stopPropagation(event);
 
     // Only deactivate once the dropzone and all children have been left
     const targets = dragTargetsRef.filter(
-      target => rootRef && rootRef.contains(target)
+      target => rootRef && target instanceof Node && rootRef.contains(target)
     );
     // Make sure to remove a target present multiple times only once
     // (Firefox may fire dragenter/dragleave multiple times on the same element)
-    const targetIdx = targets.indexOf(event.target);
+    const targetIdx = (targets as (EventTarget | null)[]).indexOf(event.target);
     if (targetIdx !== -1) {
       targets.splice(targetIdx, 1);
     }
@@ -172,7 +205,7 @@
     }
   }
 
-  function onDropCb(event) {
+  function onDropCb(event: Event) {
     event.preventDefault();
     stopPropagation(event);
 
@@ -187,16 +220,18 @@
           return;
         }
 
-        const acceptedFiles = [];
-        const fileRejections = [];
+        const acceptedFiles: File[] = [];
+        const fileRejections: { file: File, errors: ErrorDescription[] }[] = [];
 
-        files.forEach(file => {
-          const [accepted, acceptError] = fileAccepted(file, accept);
-          const [sizeMatch, sizeError] = fileMatchSize(file, minSize, maxSize);
+        files.forEach(fileGeneric => {
+          const file = fileGeneric instanceof DataTransferItem ? (fileGeneric.getAsFile()!) : fileGeneric;
+
+          const { accepted, acceptError } = fileAccepted(file, accept);
+          const { sizeMatch, sizeError } = fileMatchSize(file, minSize, maxSize);
           if (accepted && sizeMatch) {
             acceptedFiles.push(file);
           } else {
-            const errors = [acceptError, sizeError].filter(e => e);
+            const errors = [acceptError, sizeError].filter(e => e) as ErrorDescription[];
             fileRejections.push({ file, errors });
           }
         });
@@ -236,37 +271,37 @@
     resetState();
   }
 
-  function composeHandler(fn) {
+  function composeHandler<Fn>(fn: Fn) {
     return disabled ? null : fn;
   }
 
-  function composeKeyboardHandler(fn) {
+  function composeKeyboardHandler<Fn>(fn: Fn) {
     return noKeyboard ? null : composeHandler(fn);
   }
 
-  function composeDragHandler(fn) {
+  function composeDragHandler<Fn>(fn: Fn) {
     return noDrag ? null : composeHandler(fn);
   }
 
-  function stopPropagation(event) {
+  function stopPropagation(event: Event) {
     if (noDragEventsBubbling) {
       event.stopPropagation();
     }
   }
 
   // allow the entire document to be a drag target
-  function onDocumentDragOver(event) {
+  function onDocumentDragOver(event: DragEvent) {
     if (preventDropOnDocument) {
       event.preventDefault();
     }
   }
 
-  let dragTargetsRef = [];
-  function onDocumentDrop(event) {
+  let dragTargetsRef: EventTarget[] = [];
+  function onDocumentDrop(event: DragEvent) {
     if (!preventDropOnDocument) {
       return;
     }
-    if (rootRef && rootRef.contains(event.target)) {
+    if (rootRef && event.target instanceof Node && rootRef.contains(event.target)) {
       // If we intercepted an event for our instance, let it propagate down to the instance's onDrop handler
       return;
     }
@@ -282,7 +317,7 @@
         if (inputRef) {
           const { files } = inputRef;
 
-          if (!files.length) {
+          if (!files?.length) {
             state.isFileDialogActive = false;
             dispatch("filedialogcancel");
           }
@@ -296,7 +331,7 @@
     inputRef = null;
   });
 
-  function onInputElementClick(event) {
+  function onInputElementClick(event: MouseEvent) {
     event.stopPropagation();
   }
 </script>
@@ -339,7 +374,7 @@
   on:dragleave={composeDragHandler(onDragLeaveCb)}
   on:drop={composeDragHandler(onDropCb)}>
   <input
-    {accept}
+    accept={Array.isArray(accept) ? accept.join(',') : accept}
     {multiple}
     type="file"
     name={name}

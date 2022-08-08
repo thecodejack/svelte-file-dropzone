@@ -1,3 +1,4 @@
+import type { FileWithPath } from "file-selector";
 import accepts from "./attr-accept";
 
 // Error codes
@@ -6,8 +7,15 @@ export const FILE_TOO_LARGE = "file-too-large";
 export const FILE_TOO_SMALL = "file-too-small";
 export const TOO_MANY_FILES = "too-many-files";
 
+export type GenericFileItem = FileWithPath | (DataTransferItem & { kind: 'file' });
+
+export interface ErrorDescription {
+  code: string;
+  message: string;
+};
+
 // File Errors
-export const getInvalidTypeRejectionErr = (accept) => {
+export const getInvalidTypeRejectionErr = (accept: string | (string[])) => {
   accept = Array.isArray(accept) && accept.length === 1 ? accept[0] : accept;
   const messageSuffix = Array.isArray(accept)
     ? `one of ${accept.join(", ")}`
@@ -15,17 +23,17 @@ export const getInvalidTypeRejectionErr = (accept) => {
   return {
     code: FILE_INVALID_TYPE,
     message: `File type must be ${messageSuffix}`,
-  };
+  } as ErrorDescription;
 };
 
-export const getTooLargeRejectionErr = (maxSize) => {
+export const getTooLargeRejectionErr = (maxSize: number) => {
   return {
     code: FILE_TOO_LARGE,
     message: `File is larger than ${maxSize} bytes`,
   };
 };
 
-export const getTooSmallRejectionErr = (minSize) => {
+export const getTooSmallRejectionErr = (minSize: number) => {
   return {
     code: FILE_TOO_SMALL,
     message: `File is smaller than ${minSize} bytes`,
@@ -39,29 +47,30 @@ export const TOO_MANY_FILES_REJECTION = {
 
 // Firefox versions prior to 53 return a bogus MIME type for every file drag, so dragovers with
 // that MIME type will always be accepted
-export function fileAccepted(file, accept) {
-  const isAcceptable =
+export function fileAccepted(file: File, accept: string | (string[])) {
+  const accepted =
     file.type === "application/x-moz-file" || accepts(file, accept);
-  return [
-    isAcceptable,
-    isAcceptable ? null : getInvalidTypeRejectionErr(accept),
-  ];
+  return {
+    accepted,
+    acceptError: accepted ? null : getInvalidTypeRejectionErr(accept),
+  } as { accepted: true, acceptError: null } | { accepted: false, acceptError: ErrorDescription };
 }
 
-export function fileMatchSize(file, minSize, maxSize) {
+export function fileMatchSize(file: File, minSize: number, maxSize: number): 
+  { sizeMatch: true, sizeError: null } | { sizeMatch: false, sizeError: ErrorDescription } {
   if (isDefined(file.size)) {
     if (isDefined(minSize) && isDefined(maxSize)) {
-      if (file.size > maxSize) return [false, getTooLargeRejectionErr(maxSize)];
-      if (file.size < minSize) return [false, getTooSmallRejectionErr(minSize)];
+      if (file.size > maxSize) return { sizeMatch: false, sizeError: getTooLargeRejectionErr(maxSize) };
+      if (file.size < minSize) return { sizeMatch: false, sizeError: getTooSmallRejectionErr(minSize) };
     } else if (isDefined(minSize) && file.size < minSize)
-      return [false, getTooSmallRejectionErr(minSize)];
+      return { sizeMatch: false, sizeError: getTooSmallRejectionErr(minSize) };
     else if (isDefined(maxSize) && file.size > maxSize)
-      return [false, getTooLargeRejectionErr(maxSize)];
+      return { sizeMatch: false, sizeError: getTooLargeRejectionErr(maxSize) };
   }
-  return [true, null];
+  return { sizeMatch: true, sizeError: null };
 }
 
-function isDefined(value) {
+function isDefined(value: any) {
   return value !== undefined && value !== null;
 }
 
@@ -71,14 +80,20 @@ export function allFilesAccepted({
   minSize,
   maxSize,
   multiple,
+}: {
+  files: File[],
+  accept: string | string[],
+  minSize: number,
+  maxSize: number,
+  multiple: boolean,
 }) {
   if (!multiple && files.length > 1) {
     return false;
   }
 
   return files.every((file) => {
-    const [accepted] = fileAccepted(file, accept);
-    const [sizeMatch] = fileMatchSize(file, minSize, maxSize);
+    const { accepted } = fileAccepted(file, accept);
+    const { sizeMatch } = fileMatchSize(file, minSize, maxSize);
     return accepted && sizeMatch;
   });
 }
@@ -86,7 +101,7 @@ export function allFilesAccepted({
 // React's synthetic events has event.isPropagationStopped,
 // but to remain compatibility with other libs (Preact) fall back
 // to check event.cancelBubble
-export function isPropagationStopped(event) {
+export function isPropagationStopped(event: Event & { isPropagationStopped?: any }) {
   if (typeof event.isPropagationStopped === "function") {
     return event.isPropagationStopped();
   } else if (typeof event.cancelBubble !== "undefined") {
@@ -95,7 +110,7 @@ export function isPropagationStopped(event) {
   return false;
 }
 
-export function isEvtWithFiles(event) {
+export function isEvtWithFiles(event:  Event & { dataTransfer?: DataTransfer | null, target: { files?: any } | null } ) {
   if (!event.dataTransfer) {
     return !!event.target && !!event.target.files;
   }
@@ -107,17 +122,17 @@ export function isEvtWithFiles(event) {
   );
 }
 
-export function isKindFile(item) {
+export function isKindFile(item: any) {
   return typeof item === "object" && item !== null && item.kind === "file";
 }
 
-function isIe(userAgent) {
+function isIe(userAgent: string) {
   return (
     userAgent.indexOf("MSIE") !== -1 || userAgent.indexOf("Trident/") !== -1
   );
 }
 
-function isEdge(userAgent) {
+function isEdge(userAgent: string) {
   return userAgent.indexOf("Edge/") !== -1;
 }
 
@@ -132,11 +147,11 @@ export function isIeOrEdge(userAgent = window.navigator.userAgent) {
  * meaning that if propagation was stopped before invoking the fns,
  * no handlers will be executed.
  *
- * @param {Function} fns the event hanlder functions
- * @return {Function} the event handler to add to an element
+ * @param fns the event hanlder functions
+ * @return the event handler to add to an element
  */
-export function composeEventHandlers(...fns) {
-  return (event, ...args) =>
+export function composeEventHandlers(...fns: Function[]): Function {
+  return (event: Event, ...args: any[]) =>
     fns.some((fn) => {
       if (!isPropagationStopped(event) && fn) {
         fn(event, ...args);
