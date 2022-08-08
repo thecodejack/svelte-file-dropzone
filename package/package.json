@@ -6,15 +6,6 @@
   "svelte": "src/components/Dropzone.svelte",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
-  "scripts": {
-    "sync": "svelte-kit sync",
-    "package": "svelte-kit package",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "sirv": "sirv storybook-static"
-  },
   "repository": {
     "url": "https://github.com/thecodejack/svelte-file-dropzone"
   },
@@ -68,5 +59,12 @@
   ],
   "optionalDependencies": {
     "sirv-cli": "^2.0.2"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./index.js",
+    "./internal/components/Dropzone.svelte": "./internal/components/Dropzone.svelte",
+    "./internal/utils/attr-accept": "./internal/utils/attr-accept.js",
+    "./internal/utils": "./internal/utils/index.js"
   }
 }

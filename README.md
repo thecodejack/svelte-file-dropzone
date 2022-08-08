@@ -81,6 +81,30 @@ yarn add svelte-file-dropzone
 
 [Click here](https://github.com/thecodejack/svelte-file-dropzone/tree/master/stories/views) to view stories implementation
 
+## Build
+To build from the source code, you'll need to use `pnpm` (if not installed already, install by `npm install -g pnpm`). To setup the environment, run:
+
+```bash
+pnpm install
+pnpm sync
+```
+
+Then, you may launch the storybook development server by `pnpm storybook`.
+
+To generate the static HTML of the storybook, run `pnpm build-storybook`. You may launch a static HTML server and browse the output by `pnpm sirv`.
+
+On some node environments, you might see the following error:
+
+```
+node:internal/crypto/hash:67
+  this[kHandle] = new _Hash(algorithm, xofLen);
+                  ^
+
+Error: error:0308010C:digital envelope routines::unsupported
+```
+
+To overcome this, set manually in console the environment variable `NODE_OPTIONS=--openssl-legacy-provider`. See https://stackoverflow.com/a/69746937/2968864 for details.
+
 ## Credits
 
 Component is reimplementation [react-dropzone](https://github.com/react-dropzone/react-dropzone). Complete credit goes to author and contributors of [react-dropzone](https://github.com/react-dropzone/react-dropzone).

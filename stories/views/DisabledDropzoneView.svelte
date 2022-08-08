@@ -1,5 +1,5 @@
 <script>
-  import Dropzone from "./../../src";
+  import Dropzone from "$lib";
 
   let files = {
     accepted: [],
