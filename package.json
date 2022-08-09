@@ -64,10 +64,6 @@
     "svelte-dropzone",
     "sveltejs"
   ],
-  "files": [
-    "src",
-    "dist"
-  ],
   "optionalDependencies": {
     "@fontsource/fira-mono": "^4.5.9",
     "@types/cookie": "^0.5.1",
