@@ -6,10 +6,6 @@ const readFile = (fileName) => util.promisify(fs.readFile)(fileName, 'utf8');
 
 const path = require('path');
 
-// based on https://stackoverflow.com/a/22466191/2968864
-/** @param {string} str */
-const toJSString = (str) => "'" + str.replace(/[\\$'"`]/g, "\\$&").split(/\r\n|\n/).join('\\n') + "'";
-
 module.exports = {
   stories: ["../stories/**/*.stories.js"],
   addons: [
@@ -33,7 +29,7 @@ module.exports = {
 
     config.define = {
       ...(config.define || {}),
-      __readme__: toJSString(await readFile('README.md'))
+      __readme__: JSON.stringify(await readFile('README.md'))
     };
 
     return config;
