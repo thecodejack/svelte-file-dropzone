@@ -61,10 +61,10 @@
 
   // Fn for opening the file dialog programmatically
   function openFileDialog() {
-    if (inputRef) {
-      inputRef.value = null; // TODO check if null needs to be set
+    if (inputElement) {
+      inputElement.value = null; // TODO check if null needs to be set
       state.isFileDialogActive = true;
-      inputRef.click();
+      inputElement.click();
     }
   }
 
@@ -214,7 +214,7 @@
 
         // Files dropped keep input in sync
         if (event.dataTransfer) {
-          inputRef.files = event.dataTransfer?.files;
+          inputElement.files = event.dataTransfer?.files;
         }
 
         state.acceptedFiles = acceptedFiles;
@@ -287,8 +287,8 @@
     // Execute the timeout only if the file dialog is opened in the browser
     if (state.isFileDialogActive) {
       setTimeout(() => {
-        if (inputRef) {
-          const { files } = inputRef;
+        if (inputElement) {
+          const { files } = inputElement;
 
           if (!files.length) {
             state.isFileDialogActive = false;
@@ -301,7 +301,7 @@
 
   onDestroy(() => {
     // This is critical for canceling the timeout behaviour on `onWindowFocus()`
-    inputRef = null;
+    inputElement = null;
   });
 
   function onInputElementClick(event) {
@@ -357,7 +357,7 @@
     tabindex="-1"
     on:change={onDropCb}
     on:click={onInputElementClick}
-    bind:this={inputRef}
+    bind:this={inputElement}
     style="display: none;"
   />
   <slot>
