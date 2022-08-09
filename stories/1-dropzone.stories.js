@@ -4,10 +4,12 @@ import CustomSlotDropzoneView from "./views/CustomSlotDropzoneView.svelte";
 import NoClickDropZoneView from "./views/NoClickDropzoneView.svelte";
 import NoDragDropzoneView from "./views/NoDragDropzoneView.svelte";
 
+import { README } from "./global";
+
 export default {
   title: "Examples",
   parameters: {
-    notes: { Introduction: __readme__, 'Other': 'other' },
+    notes: { Introduction: README, 'Other': 'other' },
   },
 };
 

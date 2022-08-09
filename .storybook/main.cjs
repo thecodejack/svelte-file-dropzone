@@ -29,7 +29,7 @@ module.exports = {
 
     config.define = {
       ...(config.define || {}),
-      __readme__: JSON.stringify(await readFile('README.md'))
+      "process.env.__readme__": JSON.stringify(await readFile('README.md'))
     };
 
     return config;

@@ -1,10 +1,12 @@
 import WorkingCSVFileUploadView from "./views/WorkingCSVFileUploadView.svelte";
 import FullyFeaturedDropzoneView from "./views/FullyFeaturedDropzoneView.svelte";
 
+import { README } from "./global";
+
 export default {
   title: "Advanced Examples",
   parameters: {
-    notes: { Introduction: __readme__ },
+    notes: { Introduction: README },
   },
 };
 
