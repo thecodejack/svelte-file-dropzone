@@ -32,7 +32,7 @@
   export let containerStyles = "";
   export let disableDefaultStyles = false;
   export let name = "";
-  export let inputRef;
+  export let inputElement;
   export let required = false;
   const dispatch = createEventDispatcher();
 
