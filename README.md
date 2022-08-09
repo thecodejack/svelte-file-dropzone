@@ -82,6 +82,9 @@ yarn add svelte-file-dropzone
 [Click here](https://github.com/thecodejack/svelte-file-dropzone/tree/master/stories/views) to view stories implementation
 
 ## Build
+
+### Setup
+
 To build from the source code, you'll need to use `pnpm` (if not installed already, install by `npm install -g pnpm`). To setup the environment, run:
 
 ```bash
@@ -89,11 +92,19 @@ pnpm install
 pnpm sync
 ```
 
-Then, you may launch the storybook development server by `pnpm storybook`.
+### Build
 
-To generate the static HTML of the storybook, run `pnpm build-storybook`. You may launch a static HTML server and browse the output by `pnpm sirv-storybook`.
+To build the library, simply run `pnpm package`. The compiled output will be in the directory `package`.
 
-On some node environments, you might see the following error:
+### Storybook
+
+You may view and build storybook examples of this library.
+
+To see then you can run a storybook development server by `pnpm storybook`. Runing a development server is much quicker and more responsive to changes comparing to a full build.
+
+To generate the static HTML of the storybook (i.e. full build, e.g. for hosting in static server), run `pnpm build-storybook`. You may launch a local static HTML server by `pnpm sirv-storybook`.
+
+Note: On some node environments, you might see the following error:
 
 ```
 node:internal/crypto/hash:67
@@ -104,6 +115,14 @@ Error: error:0308010C:digital envelope routines::unsupported
 ```
 
 To overcome this, set manually in console the environment variable `NODE_OPTIONS=--openssl-legacy-provider`. See https://stackoverflow.com/a/69746937/2968864 for details.
+
+### SvelteKit Example
+
+We also have a modified version of the official SvelteKit basic example, for showing how to use it on SvelteKit.
+
+To explore it, start a Vite development server by `pnpm dev`.
+
+If you wish to have a full build of the SvelteKit example project, run `pnpm build`. To see the results, run `pnpm preview`.
 
 ## Credits
 
