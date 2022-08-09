@@ -8,8 +8,7 @@
     isEvtWithFiles,
     isIeOrEdge,
     isPropagationStopped,
-    onDocumentDragOver,
-    TOO_MANY_FILES_REJECTION,
+    TOO_MANY_FILES_REJECTION
   } from "./../utils/index";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
 
