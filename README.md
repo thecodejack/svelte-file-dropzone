@@ -91,7 +91,7 @@ pnpm sync
 
 Then, you may launch the storybook development server by `pnpm storybook`.
 
-To generate the static HTML of the storybook, run `pnpm build-storybook`. You may launch a static HTML server and browse the output by `pnpm sirv`.
+To generate the static HTML of the storybook, run `pnpm build-storybook`. You may launch a static HTML server and browse the output by `pnpm sirv-storybook`.
 
 On some node environments, you might see the following error:
 

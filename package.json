@@ -15,7 +15,7 @@
     "check-ts": "tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "sirv": "sirv storybook-static"
+    "sirv-storybook": "sirv storybook-static"
   },
   "repository": {
     "url": "https://github.com/thecodejack/svelte-file-dropzone"
