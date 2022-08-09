@@ -22,8 +22,6 @@ module.exports = {
   },
   async viteFinal(config, { configType: _configType }) {
     config.resolve.alias = {
-      $components: path.resolve('./src/components'),
-      $routes: path.resolve('./src/routes'),
       $lib: path.resolve('./src/lib'),
     };
 
