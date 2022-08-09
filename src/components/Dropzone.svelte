@@ -214,7 +214,7 @@
 
         // Files dropped keep input in sync
         if (event.dataTransfer) {
-          inputElement.files = event.dataTransfer?.files;
+          inputElement.files = event.dataTransfer.files;
         }
 
         state.acceptedFiles = acceptedFiles;
