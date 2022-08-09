@@ -9,7 +9,7 @@ import { README } from "./global";
 export default {
   title: "Examples",
   parameters: {
-    notes: { Introduction: README, 'Other': 'other' },
+    notes: { Introduction: README },
   },
 };
 
