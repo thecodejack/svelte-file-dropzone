@@ -1,44 +1,25 @@
-<script context="module">
-	import { enhance } from '$lib/form';
-
-	// see https://kit.svelte.dev/docs#loading
-	export const load = async ({ fetch }) => {
-		const res = await fetch('/todos.json');
-
-		if (res.ok) {
-			const todos = await res.json();
-
-			return {
-				props: { todos }
-			};
-		}
-
-		const { message } = await res.json();
-
-		return {
-			error: new Error(message)
-		};
-	};
-</script>
-
 <script>
+	import { enhance } from '$actions/form';
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 
+	/**
+	 * @typedef {{
+	 *   uid: string;
+	 *   created_at: Date;
+	 *   text: string;
+	 *   done: boolean;
+	 *   pending_delete: boolean;
+	 * }} Todo
+	 */
+
+	/** @type {Todo[]} */
 	export let todos;
-
-	async function patch(res) {
-		const todo = await res.json();
-
-		todos = todos.map((t) => {
-			if (t.uid === todo.uid) return todo;
-			return t;
-		});
-	}
 </script>
 
 <svelte:head>
 	<title>Todos</title>
+	<meta name="description" content="A todo list app" />
 </svelte:head>
 
 <div class="todos">
@@ -46,13 +27,10 @@
 
 	<form
 		class="new"
-		action="/todos.json"
+		action="/todos"
 		method="post"
 		use:enhance={{
-			result: async (res, form) => {
-				const created = await res.json();
-				todos = [...todos, created];
-
+			result: async ({ form }) => {
 				form.reset();
 			}
 		}}
@@ -68,41 +46,33 @@
 			animate:flip={{ duration: 200 }}
 		>
 			<form
-				action="/todos/{todo.uid}.json?_method=patch"
+				action="/todos?_method=PATCH"
 				method="post"
 				use:enhance={{
-					pending: (data) => {
+					pending: ({ data }) => {
 						todo.done = !!data.get('done');
-					},
-					result: patch
+					}
 				}}
 			>
+				<input type="hidden" name="uid" value={todo.uid} />
 				<input type="hidden" name="done" value={todo.done ? '' : 'true'} />
 				<button class="toggle" aria-label="Mark todo as {todo.done ? 'not done' : 'done'}" />
 			</form>
 
-			<form
-				class="text"
-				action="/todos/{todo.uid}.json?_method=patch"
-				method="post"
-				use:enhance={{
-					result: patch
-				}}
-			>
+			<form class="text" action="/todos?_method=PATCH" method="post" use:enhance>
+				<input type="hidden" name="uid" value={todo.uid} />
 				<input aria-label="Edit todo" type="text" name="text" value={todo.text} />
 				<button class="save" aria-label="Save todo" />
 			</form>
 
 			<form
-				action="/todos/{todo.uid}.json?_method=delete"
+				action="/todos?_method=DELETE"
 				method="post"
 				use:enhance={{
-					pending: () => (todo.pending_delete = true),
-					result: () => {
-						todos = todos.filter((t) => t.uid !== todo.uid);
-					}
+					pending: () => (todo.pending_delete = true)
 				}}
 			>
+				<input type="hidden" name="uid" value={todo.uid} />
 				<button class="delete" aria-label="Delete todo" disabled={todo.pending_delete} />
 			</form>
 		</div>
@@ -158,7 +128,7 @@
 	.done {
 		transform: none;
 		opacity: 0.4;
-		filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.1));
+		filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.1));
 	}
 
 	form.text {

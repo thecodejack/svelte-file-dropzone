@@ -8,6 +8,9 @@
   "main": "dist/index.js",
   "scripts": {
     "sync": "svelte-kit sync",
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
     "package": "svelte-kit package",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "npm run check-svelte && npm run check-ts",
@@ -69,6 +72,9 @@
     "dist"
   ],
   "optionalDependencies": {
+    "@fontsource/fira-mono": "^4.5.9",
+    "@types/cookie": "^0.5.1",
+    "cookie": "^0.5.0",
     "sirv-cli": "^2.0.2"
   }
 }

@@ -9,5 +9,13 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-	}
+		"paths": {
+			"$lib":["src/lib"],
+			"$lib/*":["src/lib/*"],
+			"$actions/*": ["src/actions/*"],
+			"$comps/*": ["src/comps/*"],
+			"svelte-file-dropzone": ["src/lib"]
+		}
+	},
+	"exclude": ["src/routes/**/*", "src/comps/**/*", "src/actions/*"]
 }
