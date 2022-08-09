@@ -3,9 +3,6 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Svelte component for fileupload and file dropzone",
-  "svelte": "src/components/Dropzone.svelte",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
   "scripts": {
     "sync": "svelte-kit sync",
     "dev": "vite dev",
