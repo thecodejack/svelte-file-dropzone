@@ -63,7 +63,8 @@ yarn add svelte-file-dropzone
 | containerClasses      | custom container classes                                                                 | ""            |
 | containerStyles       | custom inline container styles                                                           | ""            |
 | disableDefaultStyles  | don't apply default styles to container                                                  | false         |
-| inputRef              | reference to inputRef                                                                    | undefined     |
+| inputElement              | reference to inputRef                                                                    | undefined     |
+
 | required              | html5 required attribute added to input                                                  | false         |
 
 ### Events
