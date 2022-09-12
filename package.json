@@ -23,7 +23,7 @@
   "devDependencies": {
     "@babel/core": "7.18.10",
     "@rollup/plugin-commonjs": "22.0.2",
-    "@rollup/plugin-node-resolve": "13.3.0",
+    "@rollup/plugin-node-resolve": "14.1.0",
     "@storybook/addon-actions": "6.5.10",
     "@storybook/addon-links": "6.5.10",
     "@storybook/addon-notes": "5.3.21",
