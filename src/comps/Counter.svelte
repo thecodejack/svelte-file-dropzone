@@ -7,6 +7,11 @@
 	$: displayed_count.set(count);
 	$: offset = modulo($displayed_count, 1);
 
+	/**
+	 * @param {number} n
+	 * @param {number} m
+	 * @return {number}
+	 */
 	function modulo(n, m) {
 		// handle negative numbers
 		return ((n % m) + m) % m;
