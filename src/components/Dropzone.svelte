@@ -1,23 +1,21 @@
-<script>
-  import { fromEvent } from "file-selector";
+<script lang="ts">
+  import { fromEvent } from 'file-selector';
   import {
-    allFilesAccepted,
-    composeEventHandlers,
     fileAccepted,
     fileMatchSize,
     isEvtWithFiles,
     isIeOrEdge,
     isPropagationStopped,
-    TOO_MANY_FILES_REJECTION
-  } from "./../utils/index";
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
+    TOO_MANY_FILES_REJECTION,
+  } from './../utils/index';
+  import { onDestroy, createEventDispatcher } from 'svelte';
 
   //props
   /**
    * Set accepted file types.
    * See https://github.com/okonet/attr-accept for more information.
    */
-  export let accept; // string or string[]
+  export let accept: string;
   export let disabled = false;
   export let getFilesFromEvent = fromEvent;
   export let maxSize = Infinity;
@@ -28,10 +26,10 @@
   export let noKeyboard = false;
   export let noDrag = false;
   export let noDragEventsBubbling = false;
-  export let containerClasses = "";
-  export let containerStyles = "";
+  export let containerClasses = '';
+  export let containerStyles = '';
   export let disableDefaultStyles = false;
-  export let name = "";
+  export let name = '';
   const dispatch = createEventDispatcher();
 
   //state
@@ -44,11 +42,11 @@
     isDragReject: false,
     draggedFiles: [],
     acceptedFiles: [],
-    fileRejections: []
+    fileRejections: [],
   };
 
-  let rootRef;
-  let inputRef;
+  let rootRef: Node;
+  let inputRef: HTMLInputElement;
 
   function resetState() {
     state.isFileDialogActive = false;
@@ -111,7 +109,7 @@
     dragTargetsRef = [...dragTargetsRef, event.target];
 
     if (isEvtWithFiles(event)) {
-      Promise.resolve(getFilesFromEvent(event)).then(draggedFiles => {
+      Promise.resolve(getFilesFromEvent(event)).then((draggedFiles) => {
         if (isPropagationStopped(event) && !noDragEventsBubbling) {
           return;
         }
@@ -119,8 +117,8 @@
         state.draggedFiles = draggedFiles;
         state.isDragActive = true;
 
-        dispatch("dragenter", {
-          dragEvent: event
+        dispatch('dragenter', {
+          dragEvent: event,
         });
       });
     }
@@ -132,13 +130,13 @@
 
     if (event.dataTransfer) {
       try {
-        event.dataTransfer.dropEffect = "copy";
+        event.dataTransfer.dropEffect = 'copy';
       } catch {} /* eslint-disable-line no-empty */
     }
 
     if (isEvtWithFiles(event)) {
-      dispatch("dragover", {
-        dragEvent: event
+      dispatch('dragover', {
+        dragEvent: event,
       });
     }
 
@@ -151,7 +149,7 @@
 
     // Only deactivate once the dropzone and all children have been left
     const targets = dragTargetsRef.filter(
-      target => rootRef && rootRef.contains(target)
+      (target) => rootRef && rootRef.contains(target)
     );
     // Make sure to remove a target present multiple times only once
     // (Firefox may fire dragenter/dragleave multiple times on the same element)
@@ -168,8 +166,8 @@
     state.draggedFiles = [];
 
     if (isEvtWithFiles(event)) {
-      dispatch("dragleave", {
-        dragEvent: event
+      dispatch('dragleave', {
+        dragEvent: event,
       });
     }
   }
@@ -181,10 +179,10 @@
     dragTargetsRef = [];
 
     if (isEvtWithFiles(event)) {
-      dispatch("filedropped", {
-        event
-      })
-      Promise.resolve(getFilesFromEvent(event)).then(files => {
+      dispatch('filedropped', {
+        event,
+      });
+      Promise.resolve(getFilesFromEvent(event)).then((files) => {
         if (isPropagationStopped(event) && !noDragEventsBubbling) {
           return;
         }
@@ -192,20 +190,20 @@
         const acceptedFiles = [];
         const fileRejections = [];
 
-        files.forEach(file => {
+        files.forEach((file) => {
           const [accepted, acceptError] = fileAccepted(file, accept);
           const [sizeMatch, sizeError] = fileMatchSize(file, minSize, maxSize);
           if (accepted && sizeMatch) {
             acceptedFiles.push(file);
           } else {
-            const errors = [acceptError, sizeError].filter(e => e);
+            const errors = [acceptError, sizeError].filter((e) => e);
             fileRejections.push({ file, errors });
           }
         });
 
         if (!multiple && acceptedFiles.length > 1) {
           // Reject everything and empty accepted files
-          acceptedFiles.forEach(file => {
+          acceptedFiles.forEach((file) => {
             fileRejections.push({ file, errors: [TOO_MANY_FILES_REJECTION] });
           });
           acceptedFiles.splice(0);
@@ -214,23 +212,23 @@
         state.acceptedFiles = acceptedFiles;
         state.fileRejections = fileRejections;
 
-        dispatch("drop", {
+        dispatch('drop', {
           acceptedFiles,
           fileRejections,
-          event
+          event,
         });
 
         if (fileRejections.length > 0) {
-          dispatch("droprejected", {
+          dispatch('droprejected', {
             fileRejections,
-            event
+            event,
           });
         }
 
         if (acceptedFiles.length > 0) {
-          dispatch("dropaccepted", {
+          dispatch('dropaccepted', {
             acceptedFiles,
-            event
+            event,
           });
         }
       });
@@ -286,7 +284,7 @@
 
           if (!files.length) {
             state.isFileDialogActive = false;
-            dispatch("filedialogcancel");
+            dispatch('filedialogcancel');
           }
         }
       }, 300);
@@ -302,6 +300,44 @@
     event.stopPropagation();
   }
 </script>
+
+<svelte:window
+  on:focus={onWindowFocus}
+  on:dragover={onDocumentDragOver}
+  on:drop={onDocumentDrop}
+/>
+
+<div
+  bind:this={rootRef}
+  tabindex="0"
+  class="{disableDefaultStyles ? '' : 'dropzone'}
+  {containerClasses}"
+  style={containerStyles}
+  on:keydown={composeKeyboardHandler(onKeyDownCb)}
+  on:focus={composeKeyboardHandler(onFocusCb)}
+  on:blur={composeKeyboardHandler(onBlurCb)}
+  on:click={composeHandler(onClickCb)}
+  on:dragenter={composeDragHandler(onDragEnterCb)}
+  on:dragover={composeDragHandler(onDragOverCb)}
+  on:dragleave={composeDragHandler(onDragLeaveCb)}
+  on:drop={composeDragHandler(onDropCb)}
+>
+  <input
+    {accept}
+    {multiple}
+    type="file"
+    {name}
+    autocomplete="off"
+    tabindex="-1"
+    on:change={onDropCb}
+    on:click={onInputElementClick}
+    bind:this={inputRef}
+    style="display: none;"
+  />
+  <slot>
+    <p>Drag 'n' drop some files here, or click to select files</p>
+  </slot>
+</div>
 
 <style>
   .dropzone {
@@ -323,35 +359,3 @@
     border-color: #2196f3;
   }
 </style>
-
-<svelte:window on:focus={onWindowFocus} on:dragover={onDocumentDragOver} on:drop={onDocumentDrop} />
-
-<div
-  bind:this={rootRef}
-  tabindex="0"
-  class="{disableDefaultStyles ? '' : 'dropzone'}
-  {containerClasses}"
-  style={containerStyles}
-  on:keydown={composeKeyboardHandler(onKeyDownCb)}
-  on:focus={composeKeyboardHandler(onFocusCb)}
-  on:blur={composeKeyboardHandler(onBlurCb)}
-  on:click={composeHandler(onClickCb)}
-  on:dragenter={composeDragHandler(onDragEnterCb)}
-  on:dragover={composeDragHandler(onDragOverCb)}
-  on:dragleave={composeDragHandler(onDragLeaveCb)}
-  on:drop={composeDragHandler(onDropCb)}>
-  <input
-    {accept}
-    {multiple}
-    type="file"
-    name={name}
-    autocomplete="off"
-    tabindex="-1"
-    on:change={onDropCb}
-    on:click={onInputElementClick}
-    bind:this={inputRef}
-    style="display: none;" />
-  <slot>
-    <p>Drag 'n' drop some files here, or click to select files</p>
-  </slot>
-</div>
