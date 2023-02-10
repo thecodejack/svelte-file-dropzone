@@ -32,6 +32,8 @@
   export let containerStyles = "";
   export let disableDefaultStyles = false;
   export let name = "";
+  export let inputElement;
+  export let required = false;
   const dispatch = createEventDispatcher();
 
   //state
@@ -44,11 +46,10 @@
     isDragReject: false,
     draggedFiles: [],
     acceptedFiles: [],
-    fileRejections: []
+    fileRejections: [],
   };
 
   let rootRef;
-  let inputRef;
 
   function resetState() {
     state.isFileDialogActive = false;
@@ -60,10 +61,10 @@
 
   // Fn for opening the file dialog programmatically
   function openFileDialog() {
-    if (inputRef) {
-      inputRef.value = null; // TODO check if null needs to be set
+    if (inputElement) {
+      inputElement.value = null; // TODO check if null needs to be set
       state.isFileDialogActive = true;
-      inputRef.click();
+      inputElement.click();
     }
   }
 
@@ -211,6 +212,11 @@
           acceptedFiles.splice(0);
         }
 
+        // Files dropped keep input in sync
+        if (event.dataTransfer) {
+          inputElement.files = event.dataTransfer.files;
+        }
+
         state.acceptedFiles = acceptedFiles;
         state.fileRejections = fileRejections;
 
@@ -281,8 +287,8 @@
     // Execute the timeout only if the file dialog is opened in the browser
     if (state.isFileDialogActive) {
       setTimeout(() => {
-        if (inputRef) {
-          const { files } = inputRef;
+        if (inputElement) {
+          const { files } = inputElement;
 
           if (!files.length) {
             state.isFileDialogActive = false;
@@ -295,7 +301,7 @@
 
   onDestroy(() => {
     // This is critical for canceling the timeout behaviour on `onWindowFocus()`
-    inputRef = null;
+    inputElement = null;
   });
 
   function onInputElementClick(event) {
@@ -339,18 +345,21 @@
   on:dragenter={composeDragHandler(onDragEnterCb)}
   on:dragover={composeDragHandler(onDragOverCb)}
   on:dragleave={composeDragHandler(onDragLeaveCb)}
-  on:drop={composeDragHandler(onDropCb)}>
+  on:drop={composeDragHandler(onDropCb)}
+>
   <input
     {accept}
     {multiple}
+    {required}
     type="file"
-    name={name}
+    {name}
     autocomplete="off"
     tabindex="-1"
     on:change={onDropCb}
     on:click={onInputElementClick}
-    bind:this={inputRef}
-    style="display: none;" />
+    bind:this={inputElement}
+    style="display: none;"
+  />
   <slot>
     <p>Drag 'n' drop some files here, or click to select files</p>
   </slot>
