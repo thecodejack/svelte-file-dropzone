@@ -16,12 +16,12 @@
       "types": "./dist/components/Dropzone.svelte.d.ts",
       "svelte": "./dist/components/Dropzone.svelte"
     }
-	},
+  },
   "typesVersions": {
-		">4.0": {
-			"Dropzone.svelte": ["./dist/components/Dropzone.svelte.d.ts"]
-		}
-	},
+    ">4.0": {
+      "Dropzone.svelte": ["./dist/components/Dropzone.svelte.d.ts"]
+    }
+  },
   "repository": {
     "url": "https://github.com/thecodejack/svelte-file-dropzone"
   },
@@ -32,7 +32,7 @@
   },
   "peerDependencies": {
     "svelte": "^3.54.0"
-	},
+  },
   "devDependencies": {    
     "@babel/core": "7.18.10",
     "@rollup/plugin-commonjs": "22.0.2",
@@ -68,5 +68,5 @@
     "dist"
   ],
   "svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts"
+  "types": "./dist/index.d.ts"
 }
