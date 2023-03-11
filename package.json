@@ -1,6 +1,6 @@
 {
-  "name": "arackaf-svelte-file-dropzone",
-  "version": "0.0.10",
+  "name": "svelte-file-dropzone",
+  "version": "1.0.0",
   "description": "Svelte component for fileupload and file dropzone",
   "main": "dist/index.js",
   "scripts": {
