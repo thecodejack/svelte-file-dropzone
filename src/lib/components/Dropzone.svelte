@@ -9,7 +9,7 @@
     isIeOrEdge,
     isPropagationStopped,
     TOO_MANY_FILES_REJECTION
-  } from "./../utils/index";
+  } from "../utils/index";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
 
   //props
@@ -335,6 +335,7 @@
 <div
   bind:this={rootRef}
   tabindex="0"
+  role="button"
   class="{disableDefaultStyles ? '' : 'dropzone'}
   {containerClasses}"
   style={containerStyles}
