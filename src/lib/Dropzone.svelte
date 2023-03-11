@@ -9,7 +9,7 @@
     isIeOrEdge,
     isPropagationStopped,
     TOO_MANY_FILES_REJECTION
-  } from "../utils/index";
+  } from "./utils/index";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
 
   //props
