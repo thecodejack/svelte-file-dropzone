@@ -335,6 +335,7 @@
 <div
   bind:this={rootRef}
   tabindex="0"
+  role="button"
   class="{disableDefaultStyles ? '' : 'dropzone'}
   {containerClasses}"
   style={containerStyles}
