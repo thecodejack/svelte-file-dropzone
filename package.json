@@ -31,7 +31,7 @@
     "file-selector": "^0.2.4"
   },
   "peerDependencies": {
-		"svelte": "^3.54.0"
+    "svelte": "^3.54.0"
 	},
   "devDependencies": {    
     "@babel/core": "7.18.10",
