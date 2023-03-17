@@ -47,7 +47,7 @@
 		"@sveltejs/package": "^2.0.0",
     "babel-loader": "8.2.5",
     "publint": "^0.1.9",
-    "rollup": "2.77.2",
+    "rollup": "2.79.1",
     "rollup-plugin-svelte": "7.1.0",
     "svelte": "^3.54.0",
     "svelte-loader": "3.1.3",
