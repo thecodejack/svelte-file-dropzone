@@ -1,5 +1,6 @@
 //import { action } from "@storybook/addon-actions";
 
+import Dropzone from "../src/lib/components/Dropzone.svelte";
 import BasicDropZoneView from "./views/BasicDropzoneView.svelte";
 import DisabledDropzoneView from "./views/DisabledDropzoneView.svelte";
 import CustomSlotDropzoneView from "./views/CustomSlotDropzoneView.svelte";
@@ -10,7 +11,14 @@ import NoDragDropzoneView from "./views/NoDragDropzoneView.svelte";
 
 export default {
   title: "Examples",
-  component: BasicDropZoneView,
+  component: Dropzone,
+  parameters: {
+    docs: {
+      source: {
+        code: null,
+      },
+    },
+  },
 };
 
 export const BasicDropzone = {
