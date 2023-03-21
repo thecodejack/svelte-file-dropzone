@@ -1,8 +1,7 @@
 {
   "name": "svelte-file-dropzone",
-  "version": "1.1.0",
+  "version": "2.0.0-beta1",
   "description": "Svelte component for fileupload and file dropzone",
-  "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
     "package": "svelte-kit sync && svelte-package && publint",
@@ -68,7 +67,5 @@
   "files": [
     "src",
     "dist"
-  ],
-  "svelte": "./dist/index.js",
-  "types": "./dist/index.d.ts"
+  ]
 }
