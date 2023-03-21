@@ -1,6 +1,6 @@
 {
   "name": "svelte-file-dropzone",
-  "version": "1.0.0",
+  "version": "1.1.0-beta1",
   "description": "Svelte component for fileupload and file dropzone",
   "main": "dist/index.js",
   "scripts": {
@@ -19,7 +19,9 @@
   },
   "typesVersions": {
     ">4.0": {
-      "Dropzone.svelte": ["./dist/components/Dropzone.svelte.d.ts"]
+      "Dropzone.svelte": [
+        "./dist/components/Dropzone.svelte.d.ts"
+      ]
     }
   },
   "repository": {
@@ -33,7 +35,7 @@
   "peerDependencies": {
     "svelte": "^3.54.0"
   },
-  "devDependencies": {    
+  "devDependencies": {
     "@babel/core": "7.18.10",
     "@rollup/plugin-commonjs": "22.0.2",
     "@rollup/plugin-node-resolve": "13.3.0",
@@ -44,7 +46,7 @@
     "@storybook/addons": "6.5.10",
     "@storybook/svelte": "6.5.10",
     "@sveltejs/kit": "^1.5.0",
-		"@sveltejs/package": "^2.0.0",
+    "@sveltejs/package": "^2.0.0",
     "babel-loader": "8.2.5",
     "publint": "^0.1.9",
     "rollup": "2.77.2",
