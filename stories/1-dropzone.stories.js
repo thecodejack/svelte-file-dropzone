@@ -11,22 +11,12 @@ import NoClickDropZoneViewSource from "./views/NoClickDropzoneView.svelte?raw";
 import NoDragDropzoneView from "./views/NoDragDropzoneView.svelte";
 import NoDragDropzoneViewSource from "./views/NoDragDropzoneView.svelte?raw";
 
-//import intro from "./../README.md";
+import { sourceParameters } from "./helpers";
 
 export default {
   title: "Examples",
   component: null,
 };
-
-const sourceParameters = (source) => ({
-  parameters: {
-    docs: {
-      source: {
-        code: source,
-      },
-    },
-  },
-});
 
 export const BasicDropzone = {
   ...sourceParameters(BasicDropZoneViewSource),
