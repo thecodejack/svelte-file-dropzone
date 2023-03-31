@@ -34,11 +34,11 @@
     "svelte": "^3.54.0"
   },
   "devDependencies": {
-    "@storybook/addons": "7.0.0-rc.5",
+    "@storybook/addons": "7.0.0",
     "@storybook/addon-links": "^7.0.0-rc.5",
     "@storybook/addon-essentials": "^7.0.0-rc.5",
     "@storybook/addon-interactions": "^7.0.0-rc.5",
-    "@storybook/svelte": "7.0.0-rc.5",
+    "@storybook/svelte": "7.0.0",
     "@storybook/sveltekit": "^7.0.0-rc.5",
     "@sveltejs/kit": "^1.5.0",
     "@sveltejs/package": "^2.0.0",
