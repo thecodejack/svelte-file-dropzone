@@ -42,7 +42,7 @@
     "@storybook/sveltekit": "^7.0.0-rc.5",
     "@sveltejs/kit": "^1.5.0",
     "@sveltejs/package": "^2.0.0",
-    "babel-loader": "8.2.5",
+    "babel-loader": "9.1.2",
     "publint": "^0.1.9",
     "storybook": "^7.0.0-rc.5",
     "svelte": "^3.54.0",
