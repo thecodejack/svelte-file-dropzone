@@ -28,7 +28,7 @@
   "author": "thecodejack",
   "license": "MIT",
   "dependencies": {
-    "file-selector": "^0.2.4"
+    "file-selector": "^0.6.0"
   },
   "peerDependencies": {
     "svelte": "^3.54.0"
