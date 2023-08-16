@@ -10,7 +10,7 @@
     "build-storybook": "storybook build"
   },
   "exports": {
-    "./Dropzone.svelte": {
+    ".": {
       "types": "./dist/components/Dropzone.svelte.d.ts",
       "svelte": "./dist/components/Dropzone.svelte"
     }
