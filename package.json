@@ -18,7 +18,7 @@
   },
   "typesVersions": {
     ">4.0": {
-      "Dropzone.svelte": [
+      ".": [
         "./dist/components/Dropzone.svelte.d.ts"
       ]
     }
