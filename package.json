@@ -4,24 +4,14 @@
   "description": "Svelte component for fileupload and file dropzone",
   "scripts": {
     "package": "svelte-kit sync && svelte-package && publint",
+    "prepare": "npm run package",
     "prepublishOnly": "npm run package",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "exports": {
-    "./Dropzone.svelte": {
-      "types": "./dist/components/Dropzone.svelte.d.ts",
-      "svelte": "./dist/components/Dropzone.svelte"
-    }
-  },
-  "typesVersions": {
-    ">4.0": {
-      "Dropzone.svelte": [
-        "./dist/components/Dropzone.svelte.d.ts"
-      ]
-    }
-  },
+  "main": "./dist/components/Dropzone.svelte",
+  "types": "./dist/components/Dropzone.svelte.d.ts",
   "repository": {
     "url": "https://github.com/thecodejack/svelte-file-dropzone"
   },
