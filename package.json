@@ -10,19 +10,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/components/Dropzone.svelte.d.ts",
-      "svelte": "./dist/components/Dropzone.svelte"
-    }
-  },
-  "typesVersions": {
-    ">4.0": {
-      ".": [
-        "./dist/components/Dropzone.svelte.d.ts"
-      ]
-    }
-  },
+  "main": "./dist/components/Dropzone.svelte",
+  "types": "./dist/components/Dropzone.svelte.d.ts",
   "repository": {
     "url": "https://github.com/thecodejack/svelte-file-dropzone"
   },
