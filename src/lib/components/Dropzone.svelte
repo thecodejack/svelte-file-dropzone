@@ -242,17 +242,11 @@
     resetState();
   }
 
-  function composeHandler(fn) {
-    return disabled ? null : fn;
-  }
+  $: composeHandler = fn => (disabled ? null : fn);
 
-  function composeKeyboardHandler(fn) {
-    return noKeyboard ? null : composeHandler(fn);
-  }
+  $: composeKeyboardHandler = fn => (noKeyboard ? null : composeHandler(fn));
 
-  function composeDragHandler(fn) {
-    return noDrag ? null : composeHandler(fn);
-  }
+  $: composeDragHandler = fn => (noDrag ? null : composeHandler(fn));
 
   function stopPropagation(event) {
     if (noDragEventsBubbling) {
