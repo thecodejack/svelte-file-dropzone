@@ -1,2 +1,57 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import Dropzone from '../../../src/components/Dropzone.svelte';
+
+	let files = {
+		accepted: [] as any[],
+		rejected: [] as any[]
+	};
+
+	function handleFilesSelect(e: any) {
+		const { acceptedFiles, fileRejections } = e.detail;
+		files.accepted = [...files.accepted, ...acceptedFiles];
+		files.rejected = [...files.rejected, ...fileRejections];
+	}
+</script>
+
+<svelte:head>
+	<title>Home</title>
+</svelte:head>
+
+<section>
+	<Dropzone on:drop={handleFilesSelect} />
+
+	<ol>
+		{#each files.accepted as item}
+			<li>{item.name}</li>
+		{/each}
+	</ol>
+</section>
+
+<style>
+	section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+	}
+
+	h1 {
+		width: 100%;
+	}
+
+	.welcome {
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding: 0 0 calc(100% * 495 / 2048) 0;
+	}
+
+	.welcome img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		display: block;
+	}
+</style>
