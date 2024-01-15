@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Dropzone from '../../../src/components/Dropzone.svelte';
+	import Dropzone from '../../../../src/components/Dropzone.svelte';
 
 	let files = {
 		accepted: [] as any[],
@@ -12,10 +12,6 @@
 		files.rejected = [...files.rejected, ...fileRejections];
 	}
 </script>
-
-<svelte:head>
-	<title>Home</title>
-</svelte:head>
 
 <section>
 	<Dropzone on:drop={handleFilesSelect} />
