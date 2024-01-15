@@ -17,7 +17,7 @@
    * Set accepted file types.
    * See https://github.com/okonet/attr-accept for more information.
    */
-  export let accept; // string or string[]
+  export let accept = undefined; // string or string[]
   export let disabled = false;
   export let getFilesFromEvent = fromEvent;
   export let maxSize = Infinity;
@@ -32,7 +32,7 @@
   export let containerStyles = "";
   export let disableDefaultStyles = false;
   export let name = "";
-  export let inputElement;
+  export let inputElement = undefined;
   export let required = false;
   const dispatch = createEventDispatcher();
 
@@ -46,7 +46,7 @@
     isDragReject: false,
     draggedFiles: [],
     acceptedFiles: [],
-    fileRejections: [],
+    fileRejections: []
   };
 
   let rootRef;
@@ -151,9 +151,7 @@
     stopPropagation(event);
 
     // Only deactivate once the dropzone and all children have been left
-    const targets = dragTargetsRef.filter(
-      target => rootRef && rootRef.contains(target)
-    );
+    const targets = dragTargetsRef.filter(target => rootRef && rootRef.contains(target));
     // Make sure to remove a target present multiple times only once
     // (Firefox may fire dragenter/dragleave multiple times on the same element)
     const targetIdx = targets.indexOf(event.target);
@@ -184,7 +182,7 @@
     if (isEvtWithFiles(event)) {
       dispatch("filedropped", {
         event
-      })
+      });
       Promise.resolve(getFilesFromEvent(event)).then(files => {
         if (isPropagationStopped(event) && !noDragEventsBubbling) {
           return;
@@ -309,27 +307,6 @@
   }
 </script>
 
-<style>
-  .dropzone {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-width: 2px;
-    border-radius: 2px;
-    border-color: #eeeeee;
-    border-style: dashed;
-    background-color: #fafafa;
-    color: #bdbdbd;
-    outline: none;
-    transition: border 0.24s ease-in-out;
-  }
-  .dropzone:focus {
-    border-color: #2196f3;
-  }
-</style>
-
 <svelte:window on:focus={onWindowFocus} on:dragover={onDocumentDragOver} on:drop={onDocumentDrop} />
 
 <div
@@ -364,3 +341,24 @@
     <p>Drag 'n' drop some files here, or click to select files</p>
   </slot>
 </div>
+
+<style>
+  .dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border 0.24s ease-in-out;
+  }
+  .dropzone:focus {
+    border-color: #2196f3;
+  }
+</style>
