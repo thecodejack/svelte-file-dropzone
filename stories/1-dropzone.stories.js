@@ -1,41 +1,54 @@
-import { action } from "@storybook/addon-actions";
+//import { action } from "@storybook/addon-actions";
 
 import BasicDropZoneView from "./views/BasicDropzoneView.svelte";
+import BasicDropZoneViewSource from "./views/BasicDropzoneView.svelte?raw";
 import DisabledDropzoneView from "./views/DisabledDropzoneView.svelte";
+import DisabledDropzoneViewSource from "./views/DisabledDropzoneView.svelte?raw";
 import CustomSlotDropzoneView from "./views/CustomSlotDropzoneView.svelte";
+import CustomSlotDropzoneViewSource from "./views/CustomSlotDropzoneView.svelte?raw";
 import NoClickDropZoneView from "./views/NoClickDropzoneView.svelte";
+import NoClickDropZoneViewSource from "./views/NoClickDropzoneView.svelte?raw";
 import NoDragDropzoneView from "./views/NoDragDropzoneView.svelte";
+import NoDragDropzoneViewSource from "./views/NoDragDropzoneView.svelte?raw";
 
-import intro from "./../README.md";
+import { sourceParameters } from "./helpers";
 
 export default {
   title: "Examples",
-  parameters: {
-    notes: { Introduction: intro },
-  },
+  component: null,
 };
 
-export const BasicDropzone = () => ({
-  Component: BasicDropZoneView,
-  props: {},
-});
+export const BasicDropzone = {
+  ...sourceParameters(BasicDropZoneViewSource),
+  render: () => ({
+    Component: BasicDropZoneView,
+  }),
+};
 
-export const DisabledDropzone = () => ({
-  Component: DisabledDropzoneView,
-  props: {},
-});
+export const DisabledDropzone = {
+  ...sourceParameters(DisabledDropzoneViewSource),
+  render: () => ({
+    Component: DisabledDropzoneView,
+  }),
+};
 
-export const CustomSlotDropzone = () => ({
-  Component: CustomSlotDropzoneView,
-  props: {},
-});
+export const CustomSlotDropzone = {
+  ...sourceParameters(CustomSlotDropzoneViewSource),
+  render: () => ({
+    Component: CustomSlotDropzoneView,
+  }),
+};
 
-export const DropZoneWithClickDisabled = () => ({
-  Component: NoClickDropZoneView,
-  props: {},
-});
+export const DropZoneWithClickDisabled = {
+  ...sourceParameters(NoClickDropZoneViewSource),
+  render: () => ({
+    Component: NoClickDropZoneView,
+  }),
+};
 
-export const DropZoneWithDragDisabled = () => ({
-  Component: NoDragDropzoneView,
-  props: {},
-});
+export const DropZoneWithDragDisabled = {
+  ...sourceParameters(NoDragDropzoneViewSource),
+  render: () => ({
+    Component: NoDragDropzoneView,
+  }),
+};

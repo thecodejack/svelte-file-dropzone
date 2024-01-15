@@ -3,3 +3,4 @@ dist
 storybook-static
 package-lock.json
 .DS_Store
+.svelte-kit
