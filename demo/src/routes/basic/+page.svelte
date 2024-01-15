@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Dropzone from '../../../../src/components/Dropzone.svelte';
+	import Dropzone from '../../../../src/lib/components/Dropzone.svelte';
 
 	let files = {
 		accepted: [] as any[],
