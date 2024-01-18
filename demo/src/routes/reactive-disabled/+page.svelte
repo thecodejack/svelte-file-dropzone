@@ -1,39 +1,26 @@
-<script context="module">
-	export const prerender = true;
-</script>
-
-<script>
-	import Dropzone from 'svelte-file-dropzone';
+<script lang="ts">
+	import Dropzone from '../../../../src/lib/components/Dropzone.svelte';
 
 	let files = {
-		accepted: [],
-		rejected: []
+		accepted: [] as any[],
+		rejected: [] as any[]
 	};
 
-	function handleFilesSelect(e) {
+	function handleFilesSelect(e: any) {
 		const { acceptedFiles, fileRejections } = e.detail;
 		files.accepted = [...files.accepted, ...acceptedFiles];
 		files.rejected = [...files.rejected, ...fileRejections];
 	}
+
+	let disabled = false;
+	$: dropAddedStyles = disabled
+		? 'border-color: lightgray; cursor: not-allowed;'
+		: 'border-color: blue';
 </script>
 
-<svelte:head>
-	<title>Home</title>
-</svelte:head>
-
 <section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<Dropzone on:drop={handleFilesSelect} />
+	<label>Disable dropzone <input type="checkbox" bind:checked={disabled} /></label>
+	<Dropzone {disabled} on:drop={handleFilesSelect} containerStyles={dropAddedStyles} />
 
 	<ol>
 		{#each files.accepted as item}
