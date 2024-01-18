@@ -1,9 +1,9 @@
 <script>
-  import Dropzone from "./../../src";
+  import Dropzone from "../../src/lib/components/Dropzone.svelte";
 
   let files = {
     accepted: [],
-    rejected: []
+    rejected: [],
   };
 
   function handleFilesSelect(e) {
@@ -21,15 +21,7 @@
   }
 </script>
 
-<style>
-  :global(.custom-dropzone) {
-  }
-</style>
-
-<Dropzone
-  on:drop={handleFilesSelect}
-  accept={['image/*']}
-  containerClasses="custom-dropzone">
+<Dropzone on:drop={handleFilesSelect} accept={["image/*"]} containerClasses="custom-dropzone">
   <button>Choose images to upload</button>
 
   <p>or</p>
@@ -42,7 +34,12 @@
   {#each files.accepted as item, index}
     <div>
       <span>{item.name}</span>
-      <button on:click={e => handleRemoveFile(e, index)}>Remove</button>
+      <button on:click={(e) => handleRemoveFile(e, index)}>Remove</button>
     </div>
   {/each}
 </div>
+
+<style>
+  :global(.custom-dropzone) {
+  }
+</style>

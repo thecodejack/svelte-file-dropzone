@@ -1,9 +1,9 @@
 <script>
-  import Dropzone from "./../../src";
+  import Dropzone from "../../src/lib/components/Dropzone.svelte";
 
   let files = {
     accepted: [],
-    rejected: []
+    rejected: [],
   };
 
   function handleFilesSelect(e) {
