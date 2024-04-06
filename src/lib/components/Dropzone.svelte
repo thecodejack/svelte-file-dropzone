@@ -1,8 +1,6 @@
-<script>
+<script lang="ts">
   import { fromEvent } from "file-selector";
   import {
-    allFilesAccepted,
-    composeEventHandlers,
     fileAccepted,
     fileMatchSize,
     isEvtWithFiles,
@@ -17,7 +15,7 @@
    * Set accepted file types.
    * See https://github.com/okonet/attr-accept for more information.
    */
-  export let accept = undefined; // string or string[]
+  export let accept: string | string[] = undefined;
   export let disabled = false;
   export let getFilesFromEvent = fromEvent;
   export let maxSize = Infinity;
