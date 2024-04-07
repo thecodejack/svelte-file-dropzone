@@ -3,19 +3,32 @@
 	import { page } from '$app/stores';
 	import Dropzone from '../../../../src/lib/components/Dropzone.svelte';
 
-	$: console.log($page.form);
+	let files: string[] = [];
+
+	function handleFilesSelect(e: any) {
+		const { acceptedFiles } = e.detail;
+		files = [...acceptedFiles];
+	}
 </script>
 
 <form method="POST" action="?/postFiles" use:enhance enctype="multipart/form-data">
-	<Dropzone name="files" />
+	<Dropzone on:drop={handleFilesSelect} name="files" />
 
 	<button>Go</button>
 </form>
 
-Files Posted:
-
+Files about to upload:
 <ul>
-	{#each [] as file}
+	{#each files as file}
+		<li>{file.name}</li>
+	{/each}
+</ul>
+
+<hr />
+
+Files posted to form action:
+<ul>
+	{#each $page.form?.files ?? [] as file}
 		<li>{file}</li>
 	{/each}
 </ul>
