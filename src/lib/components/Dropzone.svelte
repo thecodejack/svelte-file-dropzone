@@ -8,7 +8,7 @@
     isPropagationStopped,
     TOO_MANY_FILES_REJECTION
   } from "../utils/index";
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
+  import { onDestroy, createEventDispatcher } from "svelte";
 
   //props
   /**
@@ -319,6 +319,7 @@
   on:dragover={composeDragHandler(onDragOverCb)}
   on:dragleave={composeDragHandler(onDragLeaveCb)}
   on:drop={composeDragHandler(onDropCb)}
+  {...$$restProps}
 >
   <input
     accept={accept?.toString()}
