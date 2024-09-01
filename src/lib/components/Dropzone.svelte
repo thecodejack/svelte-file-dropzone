@@ -319,6 +319,7 @@
   on:dragover={composeDragHandler(onDragOverCb)}
   on:dragleave={composeDragHandler(onDragLeaveCb)}
   on:drop={composeDragHandler(onDropCb)}
+  {...$$restProps}
 >
   <input
     accept={accept?.toString()}
