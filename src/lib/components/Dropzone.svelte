@@ -249,6 +249,10 @@
 
   $: composeDragHandler = fn => (noDrag ? null : composeHandler(fn));
 
+  $: defaultPlaceholderString = multiple
+    ? "Drag 'n' drop some files here, or click to select files"
+    : "Drag 'n' drop a file here, or click to select a file";
+
   function stopPropagation(event) {
     if (noDragEventsBubbling) {
       event.stopPropagation();
@@ -335,7 +339,7 @@
     style="display: none;"
   />
   <slot>
-    <p>Drag 'n' drop some files here, or click to select files</p>
+    <p>{defaultPlaceholderString}</p>
   </slot>
 </div>
 
